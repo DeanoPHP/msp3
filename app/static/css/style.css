@@ -63,6 +63,13 @@ i.material-icons {
     padding: 10px;
 }
 
+/* ----------------------------------Forms */
+.form-container {
+    width: 600px;
+    margin: 10px auto;
+    padding: 20px;
+}
+
 /* ----------------------------------Footer */
 footer {
     background-color: #eceff1 !important;
