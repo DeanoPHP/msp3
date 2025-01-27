@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <title>{% block title %} Index {% endblock %}</title>
+
+        <!-- Material Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- style.css -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', _external=True) }}">
+
+    </head>
+
+    <body>
+        <!-- wrapper -->
+        <div class="wrapper">
+            <!-- navigation -->
+            <nav class="nav-extended text-shadow">
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo text-teal">Mind Your Own Business</a>
+                    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="{{ url_for('main.home') }}">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">login</a></li>
+                        <li><a href="#">Deals</a></li>
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">Logout</a></li>
+                        <li><a href="#" data-target="slide-out" class="sidenav-trigger">button</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <ul id="slide-out" class="sidenav">
+                <li>
+                    <div class="user-view">
+                        <div class="background">
+                            <img src="images/office.jpg">
+                        </div>
+                        <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+                        <a href="#name"><span class="white-text name">John Doe</span></a>
+                        <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                    </div>
+                </li>
+                <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+                <li><a href="#!">Second Link</a></li>
+                <li>
+                    <div class="divider"></div>
+                </li>
+                <li><a class="subheader">Subheader</a></li>
+                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+            </ul>
+
+            <div class="main-container">
+                <!-- Main content area -->
+                {% block main %}
+                {% endblock %}
+            </div>
+
+            <!-- Footer area -->
+            <footer class="page-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col l6 s12">
+                            <h5 class="white-text">Mind Your Business - Yatton</h5>
+                            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your
+                                footer
+                                content.</p>
+                        </div>
+                        <div class="col l4 offset-l2 s12">
+                            <h5 class="white-text">Links</h5>
+                            <ul>
+                                <li><a class="grey-text text-lighten-3" href="#!">Home</a></li>
+                                <li><a class="grey-text text-lighten-3" href="#!">About</a></li>
+                                <li><a class="grey-text text-lighten-3" href="#!">Contact</a></li>
+                                <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-copyright">
+                    <div class="container">
+                        © 2014 Copyright Text
+                        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <!-- script.js -->
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </body>
+
+</html>
