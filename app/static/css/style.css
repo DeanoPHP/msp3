@@ -1,3 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+/* CSS variables */
+:root {
+    --heading-font-family: 'Poppins', sans-serif;
+    --color-coral: #FF7F50;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: var(--heading-font-family);
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
 html,
 body {
     height: 100%;
@@ -10,10 +28,50 @@ body {
     flex: 1 0 auto;
 }
 
+.text-teal {
+    color: #009688 !important;
+    font-family: var(--heading-font-family);
+    font-weight: 700;
+    background-color: transparent;
+}
+
+/* ----------------------------------navbar */
+.nav-wrapper {
+    background-color: #eceff1;
+    padding: 0 5px 0 5px;
+}
+
+.nav-wrapper .brand-logo {
+    color: #263238;
+}
+
+.nav-wrapper ul li a {
+    color: #263238;
+    font-weight: 500 !important;
+}
+
+/* hamburger icon */
+i.material-icons {
+    color: black;
+}
+
 .main-container {
     width: 100%;
     min-height: 90vh;
     margin: 0 auto;
     display: flex;
     padding: 10px;
+}
+
+/* ----------------------------------Footer */
+footer {
+    background-color: #eceff1 !important;
+    flex-shrink: 0;
+}
+
+footer .container h5,
+footer .container .row p,
+footer .container .row ul li a,
+footer .container {
+    color: #263238 !important;
 }
