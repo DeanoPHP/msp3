@@ -83,6 +83,23 @@ def register():
 
 @main.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        check_user = mongo.db.users.find_one({
+            "email": request.form.get("email").lower()
+        })
+
+        if check_user:
+            check_password_hash(
+                check_user["password"], request.form.get("password")
+            )
+
+            # Create a session
+            session["user"] = check_user["username"]
+            flash("Welcome, {}".format(
+                session["user"]
+            ))
+            return redirect(url_for("main.profile"))
+
     return render_template("login.html")
 
 
@@ -91,3 +108,8 @@ def logout():
     flash("You have been logged out", "success")
     session.pop("user")
     return redirect(url_for("main.home"))
+
+
+@main.route("/profile")
+def profile():
+    return render_template("profile.html")

@@ -33,8 +33,8 @@
                         {% if "user" not in session %}
                             <li><a href="{{ url_for('main.login') }}">Login</a></li>
                         {% else %}
-                            <li><a href="{{ url_for('main.deals') }}">Deals</a></li>
-                            <li><a href="{{ url_for('main.profile', username=session.get('user')) }}">Profile</a></li>
+                            <li><a href="#">Deals</a></li>
+                            <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
                             <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
                         {% endif %}
                         <li><a href="#" data-target="slide-out" class="sidenav-trigger">button</a></li>
