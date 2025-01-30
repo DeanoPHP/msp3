@@ -97,7 +97,8 @@ def login():
             session["user"] = check_user["username"]
             flash("Welcome, {}".format(
                 session["user"]
-            ))
+            ), "success")
+            
             return redirect(url_for("main.profile"))
 
     return render_template("login.html")

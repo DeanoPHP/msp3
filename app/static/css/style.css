@@ -83,6 +83,31 @@ input[name="profile_image"] {
     cursor: pointer;
 }
 
+/* ----------------------------------BTN styles */
+.danger {
+    border: 1px solid red;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: orangered;
+    margin: 0 10px 0 10px;
+}
+
+.warning {
+    border: 1px solid #FFC107;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #FFC107;
+    margin: 0 10px 0 10px;
+}
+
+.success {
+    border: 1px solid rgb(8, 155, 57);
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(8, 155, 57);
+    margin: 0 10px 0 10px;
+}
+
 /* ----------------------------------Footer */
 footer {
     background-color: #eceff1 !important;
