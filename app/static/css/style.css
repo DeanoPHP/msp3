@@ -57,9 +57,11 @@ i.material-icons {
 
 .main-container {
     width: 100%;
-    min-height: 90vh;
+    min-height: 1000px;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     padding: 10px;
 }
 
@@ -68,6 +70,17 @@ i.material-icons {
     width: 600px;
     margin: 10px auto;
     padding: 20px;
+}
+
+input[name="profile_image"] {
+    margin-bottom: 20px;
+}
+
+.button1-style {
+    border: none;
+    background-color: white;
+    color: red;
+    cursor: pointer;
 }
 
 /* ----------------------------------Footer */
