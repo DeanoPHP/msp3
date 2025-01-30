@@ -74,8 +74,7 @@ def register():
         mongo.db.users.insert_one(register)
 
         # Create a session for the user 
-        session["username"] = request.form.get("username").lower()
-        session["email"] = request.form.get("email").lower()
+        session["user"] = request.form.get("username").lower()
         flash("Congratulations and welcome to mind your own business.", "success")
         return redirect(url_for("main.login"))
 
@@ -89,4 +88,6 @@ def login():
 
 @main.route("/logout")
 def logout():
-    return "Logic to logout"
+    flash("You have been logged out", "success")
+    session.pop("user")
+    return redirect(url_for("main.home"))
