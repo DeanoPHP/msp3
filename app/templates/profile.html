@@ -25,7 +25,68 @@
     </div>
 
     <div class="right-content">
-        
+
+    </div>
+
+    <!-- Modal form to edit profile info-->
+    <div id="edit-details" class="modal">
+        <div class="modal-content">
+            <h4>Edit Your Details</h4>
+            <form action="{{ url_for('main.edit_details', user_id=user['_id']) }}" method="POST"
+                enctype="multipart/form-data">
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">U</i>
+                    <input type="text" name="username" id="username-input" class="autocomplete"
+                        value="{{ user['username'] }}">
+                    <label for="username-input">Username</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">E</i>
+                    <input type="email" name="email" id="email-input" class="autocomplete" value="{{ user['email'] }}">
+                    <label for="email-input">Email</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">N</i>
+                    <input type="text" name="name" id="name-input" class="autocomplete"
+                        value="{{ user['profile']['name'] }}">
+                    <label for="name-input">Name</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">P</i>
+                    <input type="text" name="postcode" id="postcode-input" class="autocomplete"
+                        value="{{ user['profile']['postcode'] }}">
+                    <label for="postcode-input">Postcode</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">B</i>
+                    <input type="text" name="bio" id="bio-input" class="autocomplete"
+                        value="{{ user['profile']['bio'] }}">
+                    <label for="bio-input">Bio</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">T</i>
+                    <input type="tel" name="phoneNo" id="phoneNo-input" class="autocomplete"
+                        value="{{ user['profile']['phoneNo'] }}">
+                    <label for="phoneNo-input">Phone Number</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">F</i>
+                    <input type="file" name="profile_image" id="profile_image" class="autocomplete">
+                    <label for="phoneNo-input">Change Image</label>
+                </div>
+
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

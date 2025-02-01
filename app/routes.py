@@ -133,3 +133,9 @@ def profile(username):
         username=username,
         user=profile_user
     )
+
+
+@main.route("/edit_details/<user_id>", methods=["GET", "POST"])
+def edit_details(user_id):
+    if request.method == "POST":
+        return f"this is the user id {user_id}"
