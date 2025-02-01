@@ -111,5 +111,80 @@
             </form>
         </div>
     </div>
+
+    <!-- Model for adding a business -->
+    <!-- Modal Structure -->
+    <div id="add-business" class="modal">
+        <div class="modal-content">
+            <h4>Add Your Business</h4>
+            <form action="{{ url_for('main.add_business', user_id=user['_id']) }}" method="POST"
+                enctype="multipart/form-data">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">C</i>
+                    <input type="text" name="company_name" id="autocomplete-input" class="autocomplete">
+                    <label for="autocomplete-input">Company Name</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">D</i>
+                    <input type="text" name="description" id="autocomplete-input" class="autocomplete">
+                    <label for="autocomplete-input">Description</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">L</i>
+                    <input type="text" name="location" id="autocomplete-input" class="autocomplete">
+                    <label for="autocomplete-input">Location</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <select name="category">
+                        <option value="" disabled selected>Choose one that best fits your business</option>
+                        <option value="cleaning services">Cleaning Services</option>
+                        <option value="gardening">Gardening & Landscape</option>
+                        <option value="hair and beauty">Hair & Beauty</option>
+                        <option value="child care and education">Child care & education</option>
+                        <option value="building and trades">Building & Trades</option>
+                        <option value="health fitness and sport">Health, Fitness, & Sport</option>
+                        <option value="retail and crafts">Retail, & Crafts</option>
+                        <option value="professional services">Professional Services</option>
+                    </select>
+                </div>
+
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="business_images" multiple required>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" name="business_images" type="text"
+                            placeholder="Upload one or more files">
+                    </div>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">E</i>
+                    <input type="email" name="email" id="autocomplete-input" class="autocomplete">
+                    <label for="autocomplete-input">Email</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">P</i>
+                    <input type="tel" name="phone" id="autocomplete-input" class="autocomplete">
+                    <label for="autocomplete-input">Phone</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">W</i>
+                    <input type="text" name="website" id="autocomplete-input" class="autocomplete">
+                    <label for="autocomplete-input">Website</label>
+                </div>
+
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">Add</i>
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
