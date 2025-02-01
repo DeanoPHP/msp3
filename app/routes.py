@@ -81,6 +81,12 @@ def get_business_owner(user_id):
     })
 
 
+def get_business_reviews(owners_id):
+    return list(mongo.db.reviews.find({
+        "business_id": ObjectId(owners_id)
+    }))
+
+
 @main.route("/")
 def home():
     """Renders the home page"""
@@ -255,12 +261,14 @@ def profile(username):
     get_business = get_business_owner(profile_user['_id'])
     
     if get_business:
+        get_reviews = get_business_reviews(get_business["owner_id"])
 
         return render_template(
             "profile.html",
             username=username,
             business=get_business,
-            user=profile_user
+            user=profile_user,
+            reviews=get_reviews
         )
 
     return render_template(
@@ -405,3 +413,37 @@ def add_business(user_id):
         flash("Your business has been added successfully", "success")
         print(current_user)
         return redirect(url_for("main.profile", username=current_user['username']))
+
+
+@main.route("/add_review/<username>/<business_id>", methods=["GET", "POST"])
+@logged_in_user()
+def add_review(username, business_id):
+    if business_id == "none":
+        flash("This user does not have a business", "danger")
+        return redirect(url_for("main.profile", username=session["user"]))
+
+    if request.method == "POST":
+        # Get all current user details
+        current_user = get_current_user()
+        profile = get_profile_user(username)
+
+        if not current_user:
+            flash("You need to be logged in to leave a review", "danger")
+            return redirect(url_for("main.home"))
+
+        create_review = {
+            "business_id": ObjectId(business_id),
+            "user_id": ObjectId(current_user["_id"]),
+            "profile_image": current_user['profile']['profile_image'],
+            "text": request.form.get("reviews"),
+            "date": request.form.get("datefeild")
+        }
+
+        insert_review = mongo.db.reviews.insert_one(create_review)
+
+        if not insert_review:
+            flash("Sorry something went wrong", "danger")
+            return redirect(url_for("main.profile", username=profile["username"]))
+
+        flash("Review added successfully", "success")
+        return redirect(url_for("main.profile", username=profile["username"]))

@@ -57,7 +57,52 @@
                     </div>
                 </div>
 
+                <!-- Reviews area -->
+                <h5>{{ business["company_name"] }} Reviews</h5>
+
+                <!-- Review form -->
+                <div class="row">
+                    <form class="col s12"
+                        action="{{ url_for('main.add_review', username=username, business_id=business['owner_id'] if business and business['_id'] else 'none') }}"
+                        method="POST">
+                        <div class="row">
+                            <div class="input-field col s9 review-textarea">
+                                <textarea id="reviews" name="reviews" class="materialize-textarea" required></textarea>
+                                <label for="reviews">Write a review for {{ business['company_name'] }}</label>
+                            </div>
+
+                            <input type="hidden" name="datefeild" id="datefeild">
+
+                            <button class="btn waves-effect waves-light s3 review-button" type="submit" name="action"
+                                id="review-submit">Add Review
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
                 <!-- Display reviews -->
+                <!-- Display reviews -->
+                <ul>
+                    {% for review in reviews %}
+                    <div class="review-container">
+                        <div class="row">
+                            <div class="col s2">
+                                <img class="review-image" src="data:image/jpeg;base64, {{ review['profile_image'] }}"
+                                    alt="profile image">
+                            </div>
+                            <div class="col s8 review">{{ review['text'] }}</div>
+                            <div class="col s1 edit">
+                                <a class="modal-trigger" href="#edit-review" data-id="{{ review['_id'] }}"
+                                    data-text="{{ review['text'] }}">Edit</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% else %}
+                    <li>No reviews yet for this profile.</li>
+                    {% endfor %}
+                </ul>
 
                 {% else %}
                 <h5>You do not have a business to display.</h5>
