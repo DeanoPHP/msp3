@@ -12,9 +12,37 @@ from .extensions import mongo, bcrypt
 import base64
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_pymongo import ObjectId
+from functools import wraps
 
 
 main = Blueprint("main", __name__)
+
+
+def logged_in_user():
+    """
+    A decorator to restrict access to routes requiring authentication.
+
+    - If the user is not logged in (i.e., "user" is not in session),
+      flashes an error message and redirects them to the login page.
+    - If the user is logged in, the wrapped function is executed as normal.
+
+    Returns:
+        function: The decorated function with authentication check.
+
+    Usage:
+        @logged_in_user()
+        def protected_route():
+            return "This route requires login"
+    """
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if "user" not in session:
+                flash("You need to be logged in to access this page.", "danger")
+                return redirect(url_for("main.login"))
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
 
 
 def get_current_user():
@@ -178,6 +206,7 @@ def login():
 
 
 @main.route("/logout")
+@logged_in_user()
 def logout():
     """
     Handles user logout.
@@ -195,6 +224,7 @@ def logout():
 
 
 @main.route("/profile/<username>")
+@logged_in_user()
 def profile(username):
     """
     Displays the profile page for a given username.
@@ -224,6 +254,7 @@ def profile(username):
 
 
 @main.route("/edit_details/<user_id>", methods=["GET", "POST"])
+@logged_in_user()
 def edit_details(user_id):
     """
     Handles user profile updates.
@@ -287,6 +318,7 @@ def edit_details(user_id):
 
 
 @main.route("/add_business/<user_id>", methods=["GET", "POST"])
+@logged_in_user()
 def add_business(user_id):
     """
     Handles the addition of a new business by a logged-in user.
