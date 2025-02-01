@@ -9,13 +9,13 @@
                 <form action="{{ url_for('main.login') }}" method="POST">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">email</i>
-                        <input type="email" name="email" id="email-input">
+                        <input type="email" name="email" id="email-input" required>
                         <label for="email-input">Email</label>
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">lock</i>
-                        <input type="text" name="password" id="password">
+                        <input type="text" name="password" id="password" required>
                         <label for="password">Password</label>
                     </div>
 
