@@ -11,7 +11,7 @@
             <img class="profile-image" src="{{ url_for('static', filename='images/no-image.jpeg') }}" alt="">
             {% endif %}
         </div>
-        
+
         {% if user %}
         <h5 class="coral">Welcome, {{ user['profile'].name }}</h5>
 
@@ -35,7 +35,20 @@
     </div>
 
     <div class="right-content">
+        <div class="business-container">
+            <div class="business-left">
+                <p>This is business left</p>
 
+
+                <!-- Business deals will go here -->
+
+                <!-- Reviews to go here -->
+        
+            </div>
+            <div class="business-right">
+                <p>business right</p>
+            </div>
+        </div>
     </div>
 
     <!-- Modal form to edit profile info-->

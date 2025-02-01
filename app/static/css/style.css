@@ -57,11 +57,9 @@ i.material-icons {
 
 .main-container {
     width: 100%;
-    min-height: 1000px;
+    min-height: 800px;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
-    flex-grow: 1;
     padding: 10px;
 }
 
@@ -129,6 +127,32 @@ input[name="profile_image"] {
     background-position: center center;
     background-repeat: no-repeat;
     margin: 0 auto;
+}
+
+/* business area */
+.right-content {
+    width: 82%;
+    overflow: scroll;
+}
+
+.business-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    display: flex;
+}
+
+.business-left,
+.business-right {
+    padding: 10px;
+    text-align: center;
+}
+
+.business-left {
+    width: 80%;
+    height: 100vh;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
 }
 
 /* ----------------------------------BTN styles */
