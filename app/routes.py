@@ -162,21 +162,18 @@ def login():
         })
 
         if check_user:
-            check_password_hash(
-                check_user["password"], request.form.get("password")
-            )
+            if check_password_hash(check_user["password"], request.form.get("password")):
+                # Create a session
+                session["user"] = check_user["username"]
+                flash("Welcome, {}".format(session["user"]), "success")
+                return redirect(url_for("main.profile", username=session["user"]))
+            else:
+                flash("Incorrect password. Please try again.", "danger")
+                return redirect(url_for("main.login"))
 
-            # Create a session
-            session["user"] = check_user["username"]
-            flash("Welcome, {}".format(
-                session["user"]
-            ), "success")
-
-            return redirect(url_for("main.profile", username=session["user"]))
-
-        flash("Sorry we cannot find that user", "danger")
+        flash("No user found","danger")
         return redirect(request.url)
-    
+
     return render_template("login.html")
 
 
