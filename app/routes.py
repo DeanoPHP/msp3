@@ -11,6 +11,7 @@ from flask import (
 from .extensions import mongo, bcrypt
 import base64
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_pymongo import ObjectId
 
 
 main = Blueprint("main", __name__)
@@ -136,7 +137,7 @@ def profile(username):
     if not profile_user:
         flash("No user found", "danger")
         return redirect(url_for("main.home"))
-    
+
     return render_template(
         "profile.html",
         username=username,
@@ -147,4 +148,42 @@ def profile(username):
 @main.route("/edit_details/<user_id>", methods=["GET", "POST"])
 def edit_details(user_id):
     if request.method == "POST":
-        return f"this is the user id {user_id}"
+        # Fetch the current user details from the database
+        current_user = get_current_user()
+
+        if not current_user:
+            flash("User not found", "danger")
+            return redirect(url_for('main.profile', username=session['user']))
+
+        image_data = getImages()
+
+        # Build the updated details dictionary
+        updated_details = {
+            # Use old value if form is empty
+            "email": request.form.get("email") or current_user["email"],
+            "profile": {
+                "name": request.form.get("name") or current_user["profile"]["name"],
+                "postcode": request.form.get("postcode") or current_user["profile"]["postcode"],
+                "bio": request.form.get("bio") or current_user["profile"]["bio"],
+                "phoneNo": request.form.get("phoneNo") or current_user["profile"]["phoneNo"],
+                "profile_image": image_data if image_data else current_user['profile']['profile_image']
+            }
+        }
+
+        try:
+            # Perform the update operation
+            result = mongo.db.users.update_one(
+                {"_id": ObjectId(user_id)},  # Match by ObjectId
+                {"$set": updated_details}   # Set updated values
+            )
+
+            # Check if the update was successful
+            if result.matched_count == 0:
+                flash("User not found", "danger")
+                return redirect(url_for('main.profile', username=session['user']))
+
+            flash("Updated Successfully", "success")
+            return redirect(url_for('main.profile', username=session['user']))
+        except Exception as e:
+            flash(f"An error occurred: {str(e)}", "danger")
+            return redirect(url_for("main.profile", username=session['user']))
