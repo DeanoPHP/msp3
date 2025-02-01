@@ -3,6 +3,15 @@
 {% block main %}
 <div class="main-container">
     <div class="left-content">
+        <div class="profile-image">
+            {% if user.profile.profile_image %}
+            <img class="profile-image" src="data:image/jpeg;base64,{{ user['profile']['profile_image'] }}"
+                alt="Profile Image" />
+            {% else %}
+            <img class="profile-image" src="{{ url_for('static', filename='images/no-image.jpeg') }}" alt="">
+            {% endif %}
+        </div>
+        
         {% if user %}
         <h5 class="coral">Welcome, {{ user['profile'].name }}</h5>
 
