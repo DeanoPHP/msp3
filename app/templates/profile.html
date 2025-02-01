@@ -261,5 +261,28 @@
             </form>
         </div>
     </div>
+
+    <!-- Model for editing reviews -->
+    <div id="edit-review" class="modal">
+        <div class="modal-content">
+            <h4>Edit Your Review</h4>
+            <form action="{{ url_for('main.edit_review', review_id=reviews['_id']) }}" id="edit-review-form" method="POST">
+                <div class="row">
+                    <div class="input-field col s9 review-textarea">
+                        <textarea id="edit-review-text" name="review" class="materialize-textarea" value=""
+                            required></textarea>
+                        <label for="review"></label>
+                    </div>
+
+                    <input type="hidden" name="datefeild" id="datefeild">
+
+                    <button class="btn waves-effect waves-light s3 review-button" type="submit" name="action"
+                        id="review-submit">Update Review
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -447,3 +447,37 @@ def add_review(username, business_id):
 
         flash("Review added successfully", "success")
         return redirect(url_for("main.profile", username=profile["username"]))
+
+
+@main.route("/edit_review/<review_id>", methods=["GET", "POST"])
+def edit_review(review_id):
+    if request.method == "POST":
+        get_review = mongo.db.reviews.find_one({
+            "_id": ObjectId(review_id)
+        })
+
+        if not get_review:
+            flash("Sorry we are unable to find that review", "danger")
+            return redirect(url_for("main.profile", username=session["user"]))
+
+        updated_review = {
+            "business_id": ObjectId(get_review["business_id"]),
+            "user_id": ObjectId(get_review["user_id"]),
+            "profile_image": get_review["profile_image"],
+            "text": request.form.get("review"),
+            "date": request.form.get("datefeild"),
+        }
+
+        update_to_db = mongo.db.reviews.update_one(
+            {"_id": ObjectId(review_id)},
+            {"$set": updated_review}
+        )
+
+        if not update_to_db:
+            flash("Sorry something has gone wrong", "danger")
+            return redirect(request.referrer)
+
+        flash("Updated Successfully!!", "success")
+        return redirect(request.referrer)
+
+    return redirect(request.referrer)
