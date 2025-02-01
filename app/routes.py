@@ -16,6 +16,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 main = Blueprint("main", __name__)
 
 
+# function to get the current user
+def get_current_user():
+    if "user" not in session:
+        return None
+    return mongo.db.users.find_one({
+        "username": session["user"]
+    })
+
+
 # function to get the profile user or current user
 def get_profile_user(username):
     return mongo.db.users.find_one({
