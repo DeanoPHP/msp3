@@ -57,8 +57,26 @@ const models = (modal_id, trigger) => {
     }
 };
 
+const review_style = () => {
+    const row = document.querySelectorAll(".review-container");
+
+    row.forEach((row, index) => {
+        if (index % 2 == 0) {
+            row.style.backgroundColor = "lightgrey";
+            row.style.padding = "10px";
+            row.style.marginBottom = "20px";
+            row.style.borderRadius = "10px";
+        }
+
+        if (index == -1) {
+            row.style.marginBottom = "200px";
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     sidenav();
     flash_messages();
     model_triggers();
+    review_style();
 })
