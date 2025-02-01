@@ -75,6 +75,12 @@ def get_profile_user(username):
     })
 
 
+def get_business_owner(user_id):
+    return mongo.db.business.find_one({
+        "owner_id": ObjectId(user_id)
+    })
+
+
 @main.route("/")
 def home():
     """Renders the home page"""
@@ -245,6 +251,17 @@ def profile(username):
     if not profile_user:
         flash("No user found", "danger")
         return redirect(url_for("main.home"))
+    
+    get_business = get_business_owner(profile_user['_id'])
+    
+    if get_business:
+
+        return render_template(
+            "profile.html",
+            username=username,
+            business=get_business,
+            user=profile_user
+        )
 
     return render_template(
         "profile.html",

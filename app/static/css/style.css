@@ -155,6 +155,25 @@ input[name="profile_image"] {
     border-right: 1px solid #333;
 }
 
+.business_images_container {
+    display: flex;
+}
+
+.business_images {
+    width: 100%;
+    height: 200px;
+}
+
+.business-logo {
+    width: 180px;
+    height: 180px;
+    margin: 10px auto;
+    border-radius: 90%;
+    background-image: url('https://marketplace.canva.com/EAE6rSCqo4k/1/0/1600w/canva-blue-simple-house-cleaning-logo-design-yo1oFty_LZs.jpg');
+    background-size: 100% 100%;
+}
+
+
 /* ----------------------------------BTN styles */
 .danger {
     border: 1px solid red;

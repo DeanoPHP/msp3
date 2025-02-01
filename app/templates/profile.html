@@ -34,19 +34,49 @@
         {% endif %}
     </div>
 
+    <!-- Display business data -->
     <div class="right-content">
         <div class="business-container">
             <div class="business-left">
-                <p>This is business left</p>
+                {% if business %}
 
+                <h5 class="coral">{{ business['company_name'] }}</h5>
+                <p><b>Business Overview:</b> {{ business['description'] }}</p>
 
-                <!-- Business deals will go here -->
+                <!-- images go here -->
+                <div class="row">
+                    <div class="business_images_container col s12">
+                        <div class="row">
+                            {% for image in business['images'] %}
+                            <div class="col s4">
+                                <img class="business_images" src="data:image/jpeg;base64,{{ image }}"
+                                    alt="Business Image">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
 
-                <!-- Reviews to go here -->
-        
+                <!-- Display reviews -->
+
+                {% else %}
+                <h5>You do not have a business to display.</h5>
+                {% endif %}
             </div>
             <div class="business-right">
-                <p>business right</p>
+                {% if business %}
+                <div class="business-logo"></div>
+                <p><b>Category:</b> {{ business['category'] }}</p>
+                <p><b>Location:</b> {{ business['location'] }}</p>
+                <p><b>Email:</b> {{ business['contact_info']['email'] }}</p>
+                <p><b>Phone:</b> {{ business['contact_info']['phone'] }}</p>
+                <p><b>Website:</b> <a href="https://{{ business['contact_info']['website'] }}" target="_blank">{{
+                        business['contact_info']['website'] }}</a></p>
+                <p><a class="modal-trigger" href="#create-deal">Create a deal</a></p>
+                <p><a class="btn red modal-trigger" href="#deleteBusinessModal">Delete Business</a></p>
+                {% else %}
+                <h5>No business info</h5>
+                {% endif %}
             </div>
         </div>
     </div>
