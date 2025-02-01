@@ -1,1 +1,31 @@
-<h1>This is the profile page</h1>
+{% extends "base.html" %}
+{% block main %}
+<div class="main-container">
+    <div class="left-content">
+        {% if user %}
+        <h5 class="coral">Welcome, {{ user['profile'].name }}</h5>
+
+        <ul>
+            <p><b>Username:</b> {{ user["username"] }}</p>
+            <p><b>Email:</b> {{ user['email'] }}</p>
+            <p><b>Phone:</b> {{ user['profile'].phoneNo }}</p>
+            <p><b>bio:</b> {{ user['profile'].bio }}</p>
+            {% if session["user"] == user["username"] %}
+            <p><a class="modal-trigger" href="#edit-details">Edit Details</a></p>
+            {% if not business %}
+            <p><a class="modal-trigger" href="#add-business">Add a business</a></p>
+            {% endif %}
+            {% endif %}
+            <p><a class="btn red modal-trigger" href="#deleteModal">Delete Account</a></p>
+        </ul>
+
+        {% else %}
+        <h5>User profile not available</h5>
+        {% endif %}
+    </div>
+
+    <div class="right-content">
+        
+    </div>
+</div>
+{% endblock %}

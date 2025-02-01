@@ -1,12 +1,12 @@
 from flask import (
-    render_template, 
+    render_template,
     Blueprint,
     request,
     flash,
     redirect,
     url_for,
     session
-    )
+)
 
 from .extensions import mongo, bcrypt
 import base64
@@ -14,6 +14,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 main = Blueprint("main", __name__)
+
+
+# function to get the profile user or current user
+def get_profile_user(username):
+    return mongo.db.users.find_one({
+        "username": username
+    })
 
 
 @main.route("/")
@@ -54,9 +61,9 @@ def register():
         if existing_user:
             flash("A userwith that username already exist", "danger")
             return redirect(request.url)
-        
+
         image_data = getImages()
-        
+
         # register the user
         register = {
             "username": request.form.get("username"),
@@ -73,7 +80,7 @@ def register():
 
         mongo.db.users.insert_one(register)
 
-        # Create a session for the user 
+        # Create a session for the user
         session["user"] = request.form.get("username").lower()
         flash("Congratulations and welcome to mind your own business.", "success")
         return redirect(url_for("main.login"))
@@ -98,8 +105,8 @@ def login():
             flash("Welcome, {}".format(
                 session["user"]
             ), "success")
-            
-            return redirect(url_for("main.profile"))
+
+            return redirect(url_for("main.profile", username=session["user"]))
 
     return render_template("login.html")
 
@@ -111,6 +118,18 @@ def logout():
     return redirect(url_for("main.home"))
 
 
-@main.route("/profile")
-def profile():
-    return render_template("profile.html")
+@main.route("/profile/<username>")
+def profile(username):
+
+    # find the profiles user
+    profile_user = get_profile_user(username)
+
+    if not profile_user:
+        flash("No user found", "danger")
+        return redirect(url_for("main.home"))
+    
+    return render_template(
+        "profile.html",
+        username=username,
+        user=profile_user
+    )
