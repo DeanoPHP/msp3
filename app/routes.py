@@ -648,3 +648,37 @@ def searched_category():
 
     return render_template("searched_category.html", category=category)
 
+
+@main.route("/delete_business/<business_user_id>", methods=["GET", "POST"])
+@logged_in_user()
+def delete_business(business_user_id):
+    # Fetch the current logged-in user
+    current_user = get_current_user()
+
+    # Fetch the business document
+    business = get_business_owner(business_user_id)
+
+    # Ensure the current user is the owner of the business
+    if not business:
+        flash("Business not found", "danger")
+        return redirect(url_for("main.profile", username=session["user"]))
+
+    if current_user["_id"] != business["owner_id"]:
+        flash("You are not authorized to delete this business", "danger")
+        return redirect(url_for("main.profile", username=session["user"]))
+
+    try:
+        # Delete the business
+        mongo.db.business.delete_one({"_id": ObjectId(business["_id"])})
+
+        # Delete all associated reviews
+        mongo.db.reviews.delete_many(
+            {"business_id": ObjectId(business_user_id)})
+
+        flash("Business and associated reviews deleted successfully", "success")
+    except Exception as e:
+        flash(f"An error occurred: {e}", "danger")
+        return redirect(url_for("main.profile", username=session["user"]))
+
+    return redirect(url_for("main.profile", username=session['user']))
+
