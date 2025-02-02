@@ -96,7 +96,13 @@
                                 <a class="modal-trigger" href="#edit-review" data-id="{{ review['_id'] }}"
                                     data-text="{{ review['text'] }}">Edit</a>
                             </div>
-
+                            <div class="col s1 delete">
+                                <form action="{{ url_for('main.review_delete', review_id=review['_id'] ) }}"
+                                    method="POST">
+                                    <input type="hidden" name="profile_username" value="{{ user['username'] }}">
+                                    <button class="button1-style" type="submit">X</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     {% else %}

@@ -499,6 +499,7 @@ def add_review(username, business_id):
 
 
 @main.route("/edit_review/<review_id>", methods=["GET", "POST"])
+@logged_in_user()
 def edit_review(review_id):
     """
     Edits an existing review.
@@ -548,3 +549,39 @@ def edit_review(review_id):
         return redirect(request.referrer)
 
     return redirect(request.referrer)
+
+
+@main.route("/review_delete/<review_id>", methods=["GET", "POST"])
+@logged_in_user()
+def review_delete(review_id):
+    """
+    Deletes a review based on the provided review_id.
+
+    - For POST requests:
+        * Deletes the review document from the MongoDB 'reviews' collection.
+        * Retrieves the profile username from the submitted form data.
+        * If the deletion is unsuccessful, flashes an error message and redirects to the profile page.
+        * If the deletion is successful, flashes a success message and redirects to the profile page.
+    - For non-POST requests, redirects to the home page.
+
+    Args:
+        review_id (str): The unique identifier of the review to be deleted.
+
+    Returns:
+        A Flask redirect response to either the user's profile page (after deletion) or the home page for GET requests.
+    """
+    if request.method == "POST":
+        review_to_delete = mongo.db.reviews.delete_one({
+            "_id": ObjectId(review_id)
+        })
+
+        profile_username = request.form.get("profile_username")
+
+        if not review_to_delete:
+            flash("Sorry something went wrong", "danger")
+            return redirect(url_for('main.profile', username=profile_username))
+
+        flash("Deleted Successfully!", "success")
+        return redirect(url_for('main.profile', username=profile_username))
+
+    return redirect(url_for("main.home"))
