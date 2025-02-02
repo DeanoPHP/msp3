@@ -297,7 +297,9 @@ def profile(username):
     return render_template(
         "profile.html",
         username=username,
-        user=profile_user
+        user=get_current_user(),
+        business=None,
+        reviews=None
     )
 
 
@@ -722,3 +724,53 @@ def delete_account(username):
     # If the current user is not the owner of the profile
     flash(f"You must be the account owner to delete it.", "warning")
     return redirect(url_for("main.profile", username=session["user"]))
+
+
+@main.route("/create_deal/<business_id>", methods=["GET", "POST"])
+def create_deal(business_id):
+    if request.method == "POST":
+        # check the person creating is the account owner
+        current_user = get_current_user()
+        business_owner = get_business_owner(ObjectId(business_id))
+
+        # check whether user owns account
+        if current_user['_id'] == business_owner['owner_id']:
+
+            if "deal_image" not in request.files or not request.files["deal_image"].filename:
+                flash("No image uploaded", "danger")
+                return redirect(request.url)
+
+            # Get file
+            file = request.files["deal_image"]
+
+            if file:  # Ensure the file is not empty
+                # Read image content
+                image_content = file.read()
+                # Encode image to Base64
+                encoded_image = base64.b64encode(image_content).decode("utf-8")
+
+                # You can now store or use the encoded_image as needed
+                # For example: save to database or pass to template
+
+                create = {
+                    "business_owner": ObjectId(business_id),
+                    "deal-text": request.form.get("deal-text"),
+                    "date": request.form.get("date"),
+                    "expire-date": request.form.get("expire-date"),
+                    "deal_image": encoded_image
+                }
+
+                upload_deal = mongo.db.deals.insert_one(create)
+
+                if not upload_deal:
+                    flash(
+                        "WOW, we are very sorry but something has gone wrong", "warning")
+                    return redirect(url_for("main.profile", username=session["user"]))
+
+                flash("Deal Created!!", "success")
+                return redirect(request.full_path)
+
+        flash("You must be the owner of the business to create a deal", "danger")
+        return redirect(url_for("main.profile", username=session["user"]))
+
+    return redirect(url_for("main.profile", username=session['user']))

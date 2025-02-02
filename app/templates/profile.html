@@ -199,25 +199,30 @@
             <h4>Add Your Business</h4>
             <form action="{{ url_for('main.add_business', user_id=user['_id']) }}" method="POST"
                 enctype="multipart/form-data">
+                <!-- Company Name -->
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">C</i>
-                    <input type="text" name="company_name" id="autocomplete-input" class="autocomplete">
-                    <label for="autocomplete-input">Company Name</label>
+                    <i class="material-icons prefix">business</i>
+                    <input type="text" name="company_name" id="company-name">
+                    <label for="company-name">Company Name</label>
                 </div>
 
+                <!-- Description -->
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">D</i>
-                    <input type="text" name="description" id="autocomplete-input" class="autocomplete">
-                    <label for="autocomplete-input">Description</label>
+                    <i class="material-icons prefix">description</i>
+                    <input type="text" name="description" id="description">
+                    <label for="description">Description</label>
                 </div>
 
+                <!-- Location -->
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">L</i>
-                    <input type="text" name="location" id="autocomplete-input" class="autocomplete">
-                    <label for="autocomplete-input">Location</label>
+                    <i class="material-icons prefix">location_on</i>
+                    <input type="text" name="location" id="location">
+                    <label for="location">Location</label>
                 </div>
 
+                <!-- Category -->
                 <div class="input-field col s12">
+                    <i class="material-icons prefix">category</i>
                     <select name="category">
                         <option value="" disabled selected>Choose one that best fits your business</option>
                         <option value="cleaning services">Cleaning Services</option>
@@ -231,37 +236,42 @@
                     </select>
                 </div>
 
+                <!-- Business Images Upload -->
                 <div class="file-field input-field">
                     <div class="btn">
-                        <span>File</span>
+                        <i class="material-icons left">cloud_upload</i>
+                        <span>Upload</span>
                         <input type="file" name="business_images" multiple required>
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" name="business_images" type="text"
-                            placeholder="Upload one or more files">
+                        <input class="file-path validate" type="text" placeholder="Upload one or more files">
                     </div>
                 </div>
 
+                <!-- Email -->
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">E</i>
-                    <input type="email" name="email" id="autocomplete-input" class="autocomplete">
-                    <label for="autocomplete-input">Email</label>
+                    <i class="material-icons prefix">email</i>
+                    <input type="email" name="email" id="email">
+                    <label for="email">Email</label>
                 </div>
 
+                <!-- Phone -->
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">P</i>
-                    <input type="tel" name="phone" id="autocomplete-input" class="autocomplete">
-                    <label for="autocomplete-input">Phone</label>
+                    <i class="material-icons prefix">phone</i>
+                    <input type="tel" name="phone" id="phone">
+                    <label for="phone">Phone</label>
                 </div>
 
+                <!-- Website -->
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">W</i>
-                    <input type="text" name="website" id="autocomplete-input" class="autocomplete">
-                    <label for="autocomplete-input">Website</label>
+                    <i class="material-icons prefix">language</i>
+                    <input type="text" name="website" id="website">
+                    <label for="website">Website</label>
                 </div>
 
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                    <i class="material-icons right">Add</i>
+                <!-- Submit Button -->
+                <button class="btn waves-effect waves-light" type="submit" name="action">
+                    Submit <i class="material-icons right">add_circle</i>
                 </button>
             </form>
         </div>
@@ -317,6 +327,41 @@
                 <button type="submit" name="confirm" value="yes" class="btn red">Yes, Delete</button>
             </form>
             <a class="modal-close btn grey">Cancel</a>
+        </div>
+    </div>
+
+    <!-- create a deal modal -->
+    <div id="create-deal" class="modal">
+        <div class="modal-content">
+            <h4>Create A Deal</h4>
+            <form action="{{ url_for('main.create_deal', business_id=business['owner_id']) }}" method="POST"
+                enctype="multipart/form-data">
+                <div class="input-field col s12">
+                    <textarea id="deal-text" name="deal-text" class="materialize-textarea" class="deal-text" value=""
+                        required></textarea>
+                    <label for="deal-text">what is the dean</label>
+                </div>
+
+                <input type="hidden" name="date" class="datefeild">
+
+                <div class="input-field col s6">
+                    <label for="expire-date">Enter the expiry date</label>
+                    <input type="date" name="expire-date" class="datepicker" required>
+                </div>
+
+                <div class="file-field input-field col s6">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="deal_image" required>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" name="deal_image" type="text"
+                            placeholder="Upload one image to promote your deal">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn teal">Create Deal</button>
+            </form>
         </div>
     </div>
 </div>
