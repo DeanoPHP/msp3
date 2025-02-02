@@ -274,3 +274,40 @@ footer .container .row ul li a,
 footer .container {
     color: #263238 !important;
 }
+
+/* For devices with a maximum width of 768px */
+@media only screen and (max-width: 768px) {
+
+    /* Styles for mobile devices */
+    .brand-logo {
+        font-size: 12px !important;
+    }
+
+    .main-container,
+    .business-container,
+    .container-searched-category {
+        flex-direction: column;
+    }
+
+    .left-content,
+    .right-content,
+    .business-left {
+        width: 100%;
+        text-align: center;
+        border: 0px;
+    }
+
+    .review-textarea {
+        width: 100% !important;
+    }
+
+    .review-image {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* searched_category.html */
+    .own-card {
+        width: 100%;
+    }
+}

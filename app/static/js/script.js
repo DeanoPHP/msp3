@@ -74,9 +74,21 @@ const review_style = () => {
     });
 }
 
+// Get the hidden input datefeild and dynamicly insert date
+const form_auto_date = () => {
+    const datefeild = document.getElementById("datefeild");
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0'); // Ensure two digits
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+    const year = today.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`; // Format: dd-MM-YYYY
+    datefeild.value = formattedDate;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     sidenav();
     flash_messages();
     model_triggers();
     review_style();
+    form_auto_date();
 })
