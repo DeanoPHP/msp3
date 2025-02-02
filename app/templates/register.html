@@ -2,69 +2,68 @@
 {% block title %} Register {% endblock %}
 {% block main %}
 <div class="form-container">
-    <h2>Register</h2>
     <div class="row">
-        <div class="col s12">
-            <div class="row">
-                <form action="{{ url_for('main.register') }}" method="POST" enctype="multipart/form-data">
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">person</i>
-                        <input type="text" name="username" id="username-input">
-                        <label for="username-input">Username</label>
-                    </div>
+        <div class="col s12 m8 offset-m2">
+            <h2>Register</h2>
+            <form action="{{ url_for('main.register') }}" method="POST" enctype="multipart/form-data">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">person</i>
+                    <input type="text" name="username" id="username-input">
+                    <label for="username-input">Username</label>
+                </div>
 
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">email</i>
-                        <input type="email" name="email" id="email-input">
-                        <label for="email-input">Email</label>
-                    </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">email</i>
+                    <input type="email" name="email" id="email-input">
+                    <label for="email-input">Email</label>
+                </div>
 
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">lock</i>
-                        <input type="password" name="password" id="password-input">
-                        <label for="password-input">Password</label>
-                    </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">lock</i>
+                    <input type="password" name="password" id="password-input">
+                    <label for="password-input">Password</label>
+                </div>
 
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">badge</i>
-                        <input type="text" name="name" id="name-input">
-                        <label for="name-input">Name</label>
-                    </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">badge</i>
+                    <input type="text" name="name" id="name-input">
+                    <label for="name-input">Name</label>
+                </div>
 
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">location_on</i>
-                        <input type="text" name="postcode" id="postcode-input">
-                        <label for="postcode-input">Postcode</label>
-                    </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">location_on</i>
+                    <input type="text" name="postcode" id="postcode-input">
+                    <label for="postcode-input">Postcode</label>
+                </div>
 
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">info</i>
-                        <input type="text" name="bio" id="bio-input">
-                        <label for="bio-input">Bio</label>
-                    </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">info</i>
+                    <input type="text" name="bio" id="bio-input">
+                    <label for="bio-input">Bio</label>
+                </div>
 
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">phone</i>
-                        <input type="tel" name="phoneNo" id="phoneNo-input">
-                        <label for="phoneNo-input">Phone Number</label>
-                    </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">phone</i>
+                    <input type="tel" name="phoneNo" id="phoneNo-input">
+                    <label for="phoneNo-input">Phone Number</label>
+                </div>
 
-                    <div class="input-field col s12">
-                        <div class="col s3">
-                            <label for="profile_image">Add A Profile Image</label>
-                            <input type="file" name="profile_image">
-                        </div>
+                <div class="input-field col s12">
+                    <div class="col s3">
+                        <label for="profile_image">Add A Profile Image</label>
+                        <input type="file" name="profile_image">
                     </div>
+                </div>
 
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                        <i class="material-icons right">send</i>
-                    </button>
-                </form>
-            </div>
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </form>
+
+            <p>If you already have an account please login.</p>
+            <a href="{{ url_for('main.login') }}">Login</a>
         </div>
     </div>
-    <p>If you already have an account please login.</p>
-    <a href="{{ url_for('main.login') }}">Login</a>
 </div>
 
 {% endblock %}
