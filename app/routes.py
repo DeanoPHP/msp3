@@ -682,3 +682,43 @@ def delete_business(business_user_id):
 
     return redirect(url_for("main.profile", username=session['user']))
 
+
+@main.route("/delete_account/<username>", methods=["GET", "POST"])
+@logged_in_user()
+def delete_account(username):
+    if request.method == "POST":
+        # Fetch the current user and the profile user
+        current_user = get_current_user()
+        page_profile_user = get_profile_user(username)
+
+        # Check if the current user is the owner of the profile
+        if page_profile_user["username"] == session["user"]:
+            # Check for business owned by the user
+            check_for_business = mongo.db.business.find_one({
+                "owner_id": ObjectId(current_user["_id"])
+            })
+
+            # If a business exists, delete all associated reviews
+            if check_for_business:
+                mongo.db.reviews.delete_many({
+                    "business_id": ObjectId(check_for_business["owner_id"])
+                })
+
+                # Delete the business itself
+                mongo.db.business.delete_one({
+                    "_id": ObjectId(check_for_business["_id"])
+                })
+
+            # Delete the user account
+            mongo.db.users.delete_one({
+                "_id": ObjectId(current_user["_id"])
+            })
+
+            # Clear the session and redirect to home
+            session.pop("user")
+            flash("Account deleted successfully!", "success")
+            return redirect(url_for("main.home"))
+
+    # If the current user is not the owner of the profile
+    flash(f"You must be the account owner to delete it.", "warning")
+    return redirect(url_for("main.profile", username=session["user"]))

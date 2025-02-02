@@ -304,5 +304,20 @@
             <a class="modal-close btn grey">Cancel</a>
         </div>
     </div>
+
+    <!-- Delete account modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h4>Confirm Account Deletion</h4>
+            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <form method="POST" action="{{ url_for('main.delete_account', username=username) }}"
+                style="display: inline;">
+                <button type="submit" name="confirm" value="yes" class="btn red">Yes, Delete</button>
+            </form>
+            <a class="modal-close btn grey">Cancel</a>
+        </div>
+    </div>
 </div>
 {% endblock %}
