@@ -76,12 +76,35 @@ def get_profile_user(username):
 
 
 def get_business_owner(user_id):
+    """
+    Retrieves a business document owned by the specified user.
+
+    - Queries the MongoDB 'business' collection for a document with an 'owner_id' that matches the provided user_id.
+    
+    Args:
+        user_id (str): The unique identifier of the user who owns the business.
+
+    Returns:
+        dict or None: The business document if found, otherwise None.
+    """
     return mongo.db.business.find_one({
         "owner_id": ObjectId(user_id)
     })
 
 
 def get_business_reviews(owners_id):
+    """
+    Retrieves all reviews for a business using the owner's identifier.
+
+    - Converts the provided owner_id to an ObjectId.
+    - Queries the MongoDB 'reviews' collection for documents where the 'business_id' matches the converted owner_id.
+
+    Args:
+        owners_id (str): The unique identifier of the business owner, used as the business_id in reviews.
+
+    Returns:
+        list: A list of review documents associated with the business. If no reviews are found, returns an empty list.
+    """
     return list(mongo.db.reviews.find({
         "business_id": ObjectId(owners_id)
     }))
@@ -418,6 +441,32 @@ def add_business(user_id):
 @main.route("/add_review/<username>/<business_id>", methods=["GET", "POST"])
 @logged_in_user()
 def add_review(username, business_id):
+    """
+    Adds a review to a business associated with a user.
+
+    - If 'business_id' equals "none", flashes an error and redirects to the user's profile.
+    - On a POST request:
+        * Retrieves the current logged-in user's details.
+        * Retrieves the profile details for the given username.
+        * Validates that a user is logged in; if not, flashes an error and redirects to the home page.
+        * Constructs a review document containing:
+            - business_id: Converted to an ObjectId.
+            - user_id: Converted to an ObjectId from the current user's ID.
+            - profile_image: Extracted from the current user's profile.
+            - text: The review text from the form input named "reviews".
+            - date: The review date from the form input named "datefeild".
+        * Inserts the review into the MongoDB 'reviews' collection.
+        * If the insertion fails, flashes an error and redirects to the profile page.
+        * If the insertion is successful, flashes a success message and redirects to the profile page.
+
+    Args:
+        username (str): The username of the profile to which the review is being added.
+        business_id (str): The identifier of the business. If "none", it indicates the absence of a business.
+
+    Returns:
+        Response: A Flask redirect response to either the user's profile page or the home page,
+        depending on the outcome of the operation.
+    """
     if business_id == "none":
         flash("This user does not have a business", "danger")
         return redirect(url_for("main.profile", username=session["user"]))
@@ -451,6 +500,24 @@ def add_review(username, business_id):
 
 @main.route("/edit_review/<review_id>", methods=["GET", "POST"])
 def edit_review(review_id):
+    """
+    Edits an existing review.
+
+    - On a POST request:
+        * Retrieves the review corresponding to the provided review_id from the database.
+        * If the review is not found, flashes an error message and redirects to the user's profile.
+        * Constructs an updated review dictionary using the form inputs for the review text and date.
+        * Updates the review document in the MongoDB 'reviews' collection.
+        * If the update operation fails, flashes an error message and redirects to the referring page.
+        * If the update is successful, flashes a success message and redirects to the referring page.
+    - For non-POST requests, simply redirects to the referring page.
+
+    Args:
+        review_id (str): The unique identifier of the review to edit.
+
+    Returns:
+        Response: A Flask redirect response that either directs the user to the referring page or the profile page with an appropriate flash message.
+    """
     if request.method == "POST":
         get_review = mongo.db.reviews.find_one({
             "_id": ObjectId(review_id)
