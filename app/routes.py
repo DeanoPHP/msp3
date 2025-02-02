@@ -588,8 +588,32 @@ def review_delete(review_id):
 
 
 @main.route("/searched_category", methods=["GET", "POST"])
-# @logged_in_user()
 def searched_category():
+    """
+    Handles category-based business searches and redirects to user profiles.
+
+    For POST requests:
+    - Retrieves the owner_id from the form data.
+    - Finds the user profile associated with the owner_id.
+    - Extracts the username from the profile.
+    - If the profile is not found, flashes an error and redirects to the home page.
+    - If a user is logged in, flashes a welcome message and redirects to the user's profile.
+    - If no user is logged in, flashes a warning and redirects to the login page.
+
+    For GET requests:
+    - Retrieves the selected category from the query parameters.
+    - Queries the 'business' collection for all businesses that match the selected category.
+    - If no businesses are found, flashes an error message and redirects to the home page.
+    - If businesses are found, renders the 'searched_category.html' template with the category data.
+
+    Args:
+        None (relies on form data for POST requests and query parameters for GET requests).
+
+    Returns:
+        A Flask response object:
+            - Redirects to the profile page, home page, or login page for POST requests.
+            - Renders the 'searched_category.html' template with business data for GET requests.
+    """
     if request.method == "POST":
         owner_id = request.form.get("owner_id")
 
