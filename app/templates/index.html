@@ -11,7 +11,7 @@
                 <p>Residential, commercial, and specialized cleaning.</p>
             </div>
             <div class="card-action">
-                <a href="">View Cleaners</a>
+                <a href="{{ url_for('main.searched_category', category='cleaning services') }}">View Cleaners</a>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
                 <p>Lawn care, tree surgery, and garden design.</p>
             </div>
             <div class="card-action">
-                <a href="">View Gardeners</a>
+                <a href="{{ url_for('main.searched_category', category='gardening') }}">View Gardeners</a>
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@
                 <p>Hairdressing, barbering, makeup artistry, and beauty treatments.</p>
             </div>
             <div class="card-action">
-                <a href="">Health</a>
+                <a href="{{ url_for('main.searched_category', category='hair and beauty') }}">Health</a>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
                 <p>Babysitting, tutoring, nurseries, and after-school programs.</p>
             </div>
             <div class="card-action">
-                <a href="">This is a
+                <a href="{{ url_for('main.searched_category', category='child care and education') }}">This is a
                     link</a>
             </div>
         </div>
@@ -60,7 +60,7 @@
                 <p>Plumbers, electricians, builders, carpenters, and painters.</p>
             </div>
             <div class="card-action">
-                <a href="">This is a link</a>
+                <a href="{{ url_for('main.searched_category', category='building and trades') }}">This is a link</a>
             </div>
         </div>
     </div>
@@ -72,7 +72,7 @@
                 <p>Personal trainers, sports coaches, physiotherapists, and fitness studios.</p>
             </div>
             <div class="card-action">
-                <a href="">This is a
+                <a href="{{ url_for('main.searched_category', category='health fitness and sport') }}">This is a
                     link</a>
             </div>
         </div>
@@ -85,7 +85,7 @@
                 <p>Handmade goods, local stores, and e-commerce businesses.</p>
             </div>
             <div class="card-action">
-                <a href="">This is a link</a>
+                <a href="{{ url_for('main.searched_category', category='retail and crafts') }}">This is a link</a>
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
                 <p>Freelance consultants, accountants, graphic designers, and IT services.</p>
             </div>
             <div class="card-action">
-                <a href="">This is a link</a>
+                <a href="{{ url_for('main.searched_category', category='professional services') }}">This is a link</a>
             </div>
         </div>
     </div>

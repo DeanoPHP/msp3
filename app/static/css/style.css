@@ -187,6 +187,56 @@ input[name="profile_image"] {
     text-align: left;
 }
 
+/* --------------------------------searched_category.html */
+.container-searched-category {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 10px;
+    overflow-x: hidden;
+}
+
+.own-card {
+    width: 100%;
+    min-height: 340px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    flex: 1 1 calc(33.33% - 16px);
+    max-width: 300px;
+}
+
+.card-content {
+    position: relative;
+}
+
+.category-btn {
+    height: auto;
+    width: 60px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 90%;
+    background-color: teal;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+    top: -60px;
+    right: 5px;
+}
+
+.category-btn:hover {
+    background-color: #0056b3;
+}
+
 /* ----------------------------------BTN styles */
 .danger {
     border: 1px solid red;

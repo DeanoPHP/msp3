@@ -585,3 +585,42 @@ def review_delete(review_id):
         return redirect(url_for('main.profile', username=profile_username))
 
     return redirect(url_for("main.home"))
+
+
+@main.route("/searched_category", methods=["GET", "POST"])
+# @logged_in_user()
+def searched_category():
+    if request.method == "POST":
+        owner_id = request.form.get("owner_id")
+
+        getProfile = mongo.db.users.find_one({
+            "_id": ObjectId(owner_id)
+        })
+
+        username = getProfile["username"]
+
+        if not getProfile:
+            flash("Something went wrong", "danger")
+            return redirect(url_for("main.home"))
+
+        # Safely check if the user is logged in
+        if "user" in session:
+            flash(f"Welcome to {username}'s profile", "success")
+            return redirect(url_for("main.profile", username=username))
+        else:
+            flash("Please log in to view profiles.", "warning")
+            return redirect(url_for("main.login"))
+
+    selected_category = request.args.get("category")
+
+    category = list(mongo.db.business.find({
+        "category": selected_category
+    }))
+
+    if not category:
+        flash(f"""There are currently no businesses under
+               {selected_category}""", "danger")
+        return redirect(url_for("main.home"))
+
+    return render_template("searched_category.html", category=category)
+
