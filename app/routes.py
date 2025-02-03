@@ -774,3 +774,12 @@ def create_deal(business_id):
         return redirect(url_for("main.profile", username=session["user"]))
 
     return redirect(url_for("main.profile", username=session['user']))
+
+
+@main.route("/deals")
+def deals():
+    get_deals = mongo.db.deals.find({})
+
+    get_deals_list = list(get_deals)
+
+    return render_template("deals.html", deals=get_deals_list)

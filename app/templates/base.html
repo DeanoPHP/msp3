@@ -28,6 +28,7 @@
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="{{ url_for('main.home') }}">Home</a></li>
                         <li><a href="{{ url_for('main.about') }}">About</a></li>
+                        <li><a href="{{ url_for('main.deals') }}">Deals</a></li>
                         {% if "user" not in session %}
                             <li><a href="{{ url_for('main.login') }}">Login</a></li>
                         {% else %}

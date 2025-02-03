@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %} Deals {% endblock %}
+{% block main %}
+    {% for deal in deals %}
+        <p><img src="data:image/jpeg;base64,{{ deal['deal_image'] }}" width="100px" height="100px" alt=""></p>
+        <p>{{ deal["_id"] }}</p>
+        <p>{{ deal["expire-date"] }}</p>
+        <p>{{ deal["deal-text"] }}</p>
+    {% endfor %}
+{% endblock %}
