@@ -274,7 +274,7 @@ button[type="submit"] {
 }
 
 .image-left {
-    width: 10%;
+    width: 14%;
 }
 
 .deals-image {
@@ -283,16 +283,28 @@ button[type="submit"] {
 }
 
 .deals-content-center {
-    width: 70%;
+    width: 66%;
     padding: 0 0 0 20px;
 }
 
 .deals-right {
     width: 20%;
-    background-image: url("https://www.shutterstock.com/image-vector/circle-rubber-stamp-text-contact-260nw-1227892183.jpg");
+    /* background-image: url("https://www.shutterstock.com/image-vector/circle-rubber-stamp-text-contact-260nw-1227892183.jpg");
     background-position: center center;
     background-size: 80px 80px;
+    background-repeat: no-repeat; */
+}
+
+.deals-right-image {
+    height: 200px;
+    width: 200px;
+    background-image: url("https://www.shutterstock.com/image-vector/circle-rubber-stamp-text-contact-260nw-1227892183.jpg");
+    background-position: center center;
+    background-size: cover;
     background-repeat: no-repeat;
+    border: none;
+    background-color: transparent; /* Ensures no button background */
+    cursor: pointer;
 }
 
 /* ----------------------------------BTN styles */

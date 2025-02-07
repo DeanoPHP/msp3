@@ -15,7 +15,13 @@
                 <p>{{ deal["expire-date"] }}</p>
             </div>
 
-            <div class="deals-right"></div>
+            <div class="deals-right">
+                <form action="{{ url_for('main.deals') }}" method="POST">
+                    <input type="hidden" name="business_id" value="{{ deal['business_id'] }}">
+                    <button type="submit" class="deals-right-image"></button>
+                </form>
+            </div>
+            
         </div>
     </div>
 </div>

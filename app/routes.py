@@ -80,7 +80,7 @@ def get_business_owner(user_id):
     Retrieves a business document owned by the specified user.
 
     - Queries the MongoDB 'business' collection for a document with an 'owner_id' that matches the provided user_id.
-    
+
     Args:
         user_id (str): The unique identifier of the user who owns the business.
 
@@ -234,7 +234,7 @@ def login():
                 flash("Incorrect password. Please try again.", "danger")
                 return redirect(url_for("main.login"))
 
-        flash("No user found","danger")
+        flash("No user found", "danger")
         return redirect(request.url)
 
     return render_template("login.html")
@@ -280,9 +280,9 @@ def profile(username):
     if not profile_user:
         flash("No user found", "danger")
         return redirect(url_for("main.home"))
-    
+
     get_business = get_business_owner(profile_user['_id'])
-    
+
     if get_business:
         get_reviews = get_business_reviews(get_business["owner_id"])
 
@@ -776,10 +776,19 @@ def create_deal(business_id):
     return redirect(url_for("main.profile", username=session['user']))
 
 
-@main.route("/deals")
+@main.route("/deals", methods=["GET", "POST"])
 def deals():
+    if request.method == "POST":
+        # Get business owner
+        # then get the user
+        # business = get_business_owner(business_id)
+        return "hello world"
+
     get_deals = mongo.db.deals.find({})
 
     get_deals_list = list(get_deals)
 
-    return render_template("deals.html", deals=get_deals_list)
+    return render_template(
+        "deals.html",
+        deals=get_deals_list
+    )
