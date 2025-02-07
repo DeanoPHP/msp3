@@ -258,6 +258,43 @@ button[type="submit"] {
     background-color: #0056b3;
 }
 
+/* ----------------------------------deals.html */
+#deals-wrapper {
+    background-color: #383a3a;
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.deal-container {
+    background-color: #fafafa;
+    border-radius: 10px;
+    display: flex;
+    /* justify-content: space-around; */
+}
+
+.image-left {
+    width: 10%;
+}
+
+.deals-image {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.deals-content-center {
+    width: 70%;
+    padding: 0 0 0 20px;
+}
+
+.deals-right {
+    width: 20%;
+    background-image: url("https://www.shutterstock.com/image-vector/circle-rubber-stamp-text-contact-260nw-1227892183.jpg");
+    background-position: center center;
+    background-size: 80px 80px;
+    background-repeat: no-repeat;
+}
+
 /* ----------------------------------BTN styles */
 .danger {
     border: 1px solid red;
