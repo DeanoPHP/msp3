@@ -16,7 +16,7 @@
             </div>
 
             <div class="deals-right">
-                <form action="{{ url_for('main.deals') }}" method="POST">
+                <form action="{{ url_for('main.deals') }}" method="POST" class="deals-form">
                     <input type="hidden" name="user_id" value="{{ deal['business_owner'] }}">
                     <button type="submit" class="deals-right-image"></button>
                 </form>
