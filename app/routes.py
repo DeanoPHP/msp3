@@ -654,13 +654,34 @@ def searched_category():
 @main.route("/delete_business/<business_user_id>", methods=["GET", "POST"])
 @logged_in_user()
 def delete_business(business_user_id):
-    # Fetch the current logged-in user
+    """
+    Handles the deletion of a business and its associated reviews.
+
+    Process:
+    - Retrieves the current logged-in user.
+    - Fetches the business document using the provided business_user_id.
+    - Ensures that the business exists; otherwise, flashes an error and redirects to the profile page.
+    - Checks if the logged-in user is the owner of the business.
+    - If the user is not authorized, flashes an error and redirects to the profile page.
+    - If authorized:
+        - Deletes the business from the database.
+        - Deletes all reviews associated with the business.
+        - Flashes a success message confirming the deletion.
+    - If an error occurs during deletion, catches the exception, flashes an error, and redirects to the profile page.
+
+    Args:
+        business_user_id (str): The unique identifier of the business to be deleted.
+
+    Returns:
+        A Flask response object:
+            - Redirects to the profile page after successful deletion.
+            - Redirects to the profile page if the business is not found or if the user is unauthorized.
+            - Redirects to the profile page if an error occurs during deletion.
+    """
     current_user = get_current_user()
 
-    # Fetch the business document
     business = get_business_owner(business_user_id)
 
-    # Ensure the current user is the owner of the business
     if not business:
         flash("Business not found", "danger")
         return redirect(url_for("main.profile", username=session["user"]))
@@ -670,10 +691,8 @@ def delete_business(business_user_id):
         return redirect(url_for("main.profile", username=session["user"]))
 
     try:
-        # Delete the business
         mongo.db.business.delete_one({"_id": ObjectId(business["_id"])})
 
-        # Delete all associated reviews
         mongo.db.reviews.delete_many(
             {"business_id": ObjectId(business_user_id)})
 
@@ -688,6 +707,31 @@ def delete_business(business_user_id):
 @main.route("/delete_account/<username>", methods=["GET", "POST"])
 @logged_in_user()
 def delete_account(username):
+    """
+    Handles user account deletion along with associated business and reviews.
+
+    For POST requests:
+    - Retrieves the current logged-in user and the profile being accessed.
+    - Ensures that the user attempting to delete the account is its owner.
+    - Checks if the user owns a business in the database.
+    - If a business exists:
+        - Deletes all reviews associated with the business.
+        - Deletes the business itself from the database.
+    - Deletes the user account from the database.
+    - Clears the session to log out the user.
+    - Flashes a success message and redirects to the home page.
+
+    If the request is not a POST or the user is not the account owner:
+    - Flashes a warning message and redirects to the profile page.
+
+    Args:
+        username (str): The username of the account being deleted.
+
+    Returns:
+        A Flask response object:
+            - Redirects to the home page after successful account deletion.
+            - Redirects to the profile page if the user is unauthorized.
+    """
     if request.method == "POST":
         # Fetch the current user and the profile user
         current_user = get_current_user()
@@ -728,6 +772,37 @@ def delete_account(username):
 
 @main.route("/create_deal/<business_id>", methods=["GET", "POST"])
 def create_deal(business_id):
+    """
+    Handles the creation of a new business deal.
+
+    For POST requests:
+    - Retrieves the current logged-in user.
+    - Checks if the current user is the owner of the specified business.
+    - If the user is not the owner, flashes an error message and redirects to their profile.
+    - Ensures an image file is uploaded; otherwise, flashes an error message and reloads the page.
+    - Reads and encodes the uploaded image into Base64 format.
+    - Collects deal information from the form, including:
+        - Business owner ID
+        - Deal description (deal-text)
+        - Start and expiration dates
+        - Encoded deal image
+    - Inserts the deal into the database.
+    - If insertion fails, flashes an error message and redirects to the profile page.
+    - On success, flashes a confirmation message and reloads the current page.
+
+    For GET requests:
+    - Redirects the user to their profile page, as deal creation should only be a POST action.
+
+    Args:
+        business_id (str): The unique identifier of the business creating the deal.
+
+    Returns:
+        A Flask response object:
+            - Redirects to the user's profile if they are not the business owner.
+            - Reloads the current page if an image is missing or a database insertion fails.
+            - Displays a success message and reloads the page on successful deal creation.
+            - Redirects to the profile page for unauthorized access attempts.
+    """
     if request.method == "POST":
         # check the person creating is the account owner
         current_user = get_current_user()
@@ -778,17 +853,55 @@ def create_deal(business_id):
 
 @main.route("/deals", methods=["GET", "POST"])
 def deals():
+    """
+    Handles business deal retrieval and user profile redirection.
+
+    For POST requests:
+    - Ensures the user is logged in before processing.
+    - Retrieves the user_id from the form data.
+    - Attempts to find the corresponding user profile in the database.
+    - If the profile exists, redirects the user to their profile page.
+    - If the profile is not found, flashes an error message and reloads the page.
+    - If the provided user_id is invalid, flashes an error message and reloads the page.
+    - If the user is not logged in, redirects to the login page.
+
+    For GET requests:
+    - Fetches all available deals from the 'deals' collection in the database.
+    - Converts the query results into a list.
+    - Renders the 'deals.html' template, passing the retrieved deals.
+
+    Args:
+        None (relies on session data and form input for POST requests).
+
+    Returns:
+        A Flask response object:
+            - Redirects to the user's profile page if found (POST request).
+            - Reloads the current page if an error occurs (POST request).
+            - Redirects to the login page if the user is not logged in (POST request).
+            - Renders the 'deals.html' template with retrieved deals (GET request).
+    """
     if request.method == "POST":
-        # Get business owner
-        # then get the user
-        # business = get_business_owner(business_id)
-        return "hello world"
+        if "user" in session:
+            user_id = request.form.get("user_id")
 
-    get_deals = mongo.db.deals.find({})
+            if user_id:
+                try:
+                    profile_user = mongo.db.users.find_one(
+                        {"_id": ObjectId(user_id)})
 
-    get_deals_list = list(get_deals)
+                    if profile_user:
+                        return redirect(url_for("main.profile", username=profile_user["username"]))
+                    else:
+                        flash(
+                            "Oops! We couldn't find that profile. Please try again.", "danger")
+                        return redirect(redirect.url)
 
-    return render_template(
-        "deals.html",
-        deals=get_deals_list
-    )
+                except Exception:
+                    flash("Invalid user ID format.", "danger")
+                    return redirect(request.url)
+
+            return redirect(request.url)
+
+        return redirect(url_for("main.login"))
+
+    return render_template("deals.html", deals=list(mongo.db.deals.find()))
