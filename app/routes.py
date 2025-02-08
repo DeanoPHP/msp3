@@ -181,7 +181,6 @@ def register():
 
         image_data = getImages()
 
-        # register the user
         register = {
             "username": request.form.get("username"),
             "email": request.form.get("email"),
@@ -197,8 +196,6 @@ def register():
 
         mongo.db.users.insert_one(register)
 
-        # Create a session for the user
-        session["user"] = request.form.get("username").lower()
         flash("Congratulations and welcome to mind your own business.", "success")
         return redirect(url_for("main.login"))
 
@@ -226,8 +223,8 @@ def login():
 
         if check_user:
             if check_password_hash(check_user["password"], request.form.get("password")):
-                # Create a session
                 session["user"] = check_user["username"]
+
                 flash("Welcome, {}".format(session["user"]), "success")
                 return redirect(url_for("main.profile", username=session["user"]))
             else:
@@ -902,6 +899,7 @@ def deals():
 
             return redirect(request.url)
 
+        flash("You must be logged in to see profiles", "warning")
         return redirect(url_for("main.login"))
 
     return render_template("deals.html", deals=list(mongo.db.deals.find()))

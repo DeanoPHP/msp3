@@ -8,7 +8,7 @@
             <img class="profile-image" src="data:image/jpeg;base64,{{ user['profile']['profile_image'] }}"
                 alt="Profile Image" />
             {% else %}
-            <img class="profile-image" src="{{ url_for('static', filename='images/no-image.jpeg') }}" alt="">
+            <img class="profile-image" src="{{ url_for('static', filename='images/no-image.png') }}" alt="">
             {% endif %}
         </div>
 
