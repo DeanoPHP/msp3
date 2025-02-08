@@ -42,6 +42,9 @@ body {
 
 .nav-wrapper .brand-logo {
     color: #263238;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: var(--heading-font-family);
 }
 
 .nav-wrapper ul li a {
