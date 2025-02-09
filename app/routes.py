@@ -172,18 +172,18 @@ def register():
     if request.method == "POST":
         # Check the user doesn't already exist
         existing_user = mongo.db.users.find_one({
-            "username": request.form.get("username")
+            "username": request.form.get("username").lower()
         })
 
         if existing_user:
-            flash("A userwith that username already exist", "danger")
+            flash("A user with that username already exist", "danger")
             return redirect(request.url)
 
         image_data = getImages()
 
         register = {
-            "username": request.form.get("username"),
-            "email": request.form.get("email"),
+            "username": request.form.get("username").lower(),
+            "email": request.form.get("email").lower(),
             "password": generate_password_hash(request.form.get("password")),
             "profile": {
                 "name": request.form.get("name"),
