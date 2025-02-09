@@ -24,9 +24,9 @@
             <p><a class="modal-trigger" href="#edit-details">Edit Details</a></p>
             {% if not business %}
             <p><a class="modal-trigger" href="#add-business">Add a business</a></p>
-            {% endif %}
-            {% endif %}
+            {% endif %}           
             <p><a class="btn red modal-trigger" href="#deleteModal">Delete Account</a></p>
+            {% endif %}
         </ul>
 
         {% else %}
@@ -123,8 +123,10 @@
                 <p><b>Phone:</b> {{ business['contact_info']['phone'] }}</p>
                 <p><b>Website:</b> <a href="https://{{ business['contact_info']['website'] }}" target="_blank">{{
                         business['contact_info']['website'] }}</a></p>
+                {% if session["user"] == user["username"] %}        
                 <p><a class="modal-trigger" href="#create-deal">Create a deal</a></p>
                 <p><a class="btn red modal-trigger" href="#deleteBusinessModal">Delete Business</a></p>
+                {% endif %}
                 {% else %}
                 <h5>No business info</h5>
                 {% endif %}
