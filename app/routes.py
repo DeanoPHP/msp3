@@ -278,17 +278,22 @@ def profile(username):
         flash("No user found", "danger")
         return redirect(url_for("main.home"))
 
-    get_business = get_business_owner(profile_user['_id'])
+    get_business = get_business_owner(profile_user["_id"])
 
     if get_business:
         get_reviews = get_business_reviews(get_business["owner_id"])
+
+        get_deal = mongo.db.deals.find_one({
+            "business_owner": ObjectId(profile_user["_id"])
+        })
 
         return render_template(
             "profile.html",
             username=username,
             business=get_business,
             user=profile_user,
-            reviews=get_reviews
+            reviews=get_reviews,
+            deal=get_deal or None
         )
 
     return render_template(
@@ -692,6 +697,10 @@ def delete_business(business_user_id):
 
         mongo.db.reviews.delete_many(
             {"business_id": ObjectId(business_user_id)})
+        
+        mongo.db.deals.delete_one({
+            "business_owner": ObjectId(business_user_id)
+        })
 
         flash("Business and associated reviews deleted successfully", "success")
     except Exception as e:

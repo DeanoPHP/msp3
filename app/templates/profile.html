@@ -24,7 +24,7 @@
             <p><a class="modal-trigger" href="#edit-details">Edit Details</a></p>
             {% if not business %}
             <p><a class="modal-trigger" href="#add-business">Add a business</a></p>
-            {% endif %}           
+            {% endif %}
             <p><a class="btn red modal-trigger" href="#deleteModal">Delete Account</a></p>
             {% endif %}
         </ul>
@@ -57,6 +57,11 @@
                     </div>
                 </div>
 
+                <!-- Display business promo -->
+                {% if deal %}
+                <h1>You have a deal</h1>
+                {% endif %}
+
                 <!-- Reviews area -->
                 <h5>{{ business["company_name"] }} Reviews</h5>
 
@@ -81,7 +86,6 @@
                     </form>
                 </div>
 
-                <!-- Display reviews -->
                 <!-- Display reviews -->
                 <ul>
                     {% for review in reviews %}
@@ -114,6 +118,7 @@
                 <h5>You do not have a business to display.</h5>
                 {% endif %}
             </div>
+
             <div class="business-right">
                 {% if business %}
                 <div class="business-logo"></div>
@@ -123,8 +128,10 @@
                 <p><b>Phone:</b> {{ business['contact_info']['phone'] }}</p>
                 <p><b>Website:</b> <a href="https://{{ business['contact_info']['website'] }}" target="_blank">{{
                         business['contact_info']['website'] }}</a></p>
-                {% if session["user"] == user["username"] %}        
+                {% if session["user"] == user["username"] %}
+                {% if not deal %}
                 <p><a class="modal-trigger" href="#create-deal">Create a deal</a></p>
+                {% endif %}
                 <p><a class="btn red modal-trigger" href="#deleteBusinessModal">Delete Business</a></p>
                 {% endif %}
                 {% else %}
