@@ -912,3 +912,9 @@ def deals():
         return redirect(url_for("main.login"))
 
     return render_template("deals.html", deals=list(mongo.db.deals.find()))
+
+
+# edit promo
+
+
+# delete promo

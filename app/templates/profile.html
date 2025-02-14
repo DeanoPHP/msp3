@@ -59,7 +59,15 @@
 
                 <!-- Display business promo -->
                 {% if deal %}
-                <h1>You have a deal</h1>
+                <h5>Promo</h5>
+                <div class="row row-deal">
+                    <div class="col s3">
+                        <img src="data:image/jpeg;base64,{{ deal['deal_image'] }}" width="120px" height="120px" alt="promo image">
+                    </div>
+                    <div style="padding:20px;text-align:left;" class="col s9">
+                        {{ deal["deal-text"] }}
+                    </div>
+                </div>
                 {% endif %}
 
                 <!-- Reviews area -->
