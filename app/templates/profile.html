@@ -62,12 +62,29 @@
                 <h5>Promo</h5>
                 <div class="row row-deal">
                     <div class="col s3">
-                        <img src="data:image/jpeg;base64,{{ deal['deal_image'] }}" width="120px" height="120px" alt="promo image">
+                        <img src="data:image/jpeg;base64,{{ deal['deal_image'] }}" width="120px" height="120px"
+                            alt="promo image">
                     </div>
-                    <div style="padding:20px;text-align:left;" class="col s9">
+                    <div style="padding:20px;text-align:left;" class="col s7">
                         {{ deal["deal-text"] }}
                     </div>
+                    <div class="col s1 edit">
+                        <a class="modal-trigger" href="#edit-review" data-id=""
+                            data-text="">
+                            <i class="material-icons edit_note">edit</i>
+                        </a>
+                    </div>
+                    <div class="col s1 delete">
+                        <form action="" method="POST">
+                            <input type="hidden" name="profile_username" value="">
+                            <button class="button1-style" type="submit">
+                                <i class="material-icons red-text">delete</i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
+                {% else %}
+                <p>We currently have no offers to display.</p>
                 {% endif %}
 
                 <!-- Reviews area -->
