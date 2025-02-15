@@ -914,7 +914,56 @@ def deals():
     return render_template("deals.html", deals=list(mongo.db.deals.find()))
 
 
-# edit promo
+@main.route("/edit_promo/<edit_id>", methods=["GET", "POST"])
+def edit_promo(edit_id):
+    """
+    Allows users to edit a promo, including updating text, expiration date, and image.
+    """
+    if request.method == "POST":
+        get_promo = mongo.db.deals.find_one({
+            "_id": ObjectId(edit_id)
+        })
 
+        if not get_promo:
+            flash("Sorry, we cannot find that promo", "danger")
+            return redirect(request.referrer)
+
+        # Check if an image was uploaded
+        image_data = None
+        if "deal-image" in request.files:
+            image_file = request.files["deal-image"]
+            if image_file.filename != "":  # Check if the file is selected
+                try:
+                    # Read and encode image in Base64
+                    image_data = base64.b64encode(image_file.read()).decode("utf-8")
+                except Exception as e:
+                    print("Error processing image:", e)
+                    flash("Failed to process deal image.", "danger")
+                    return redirect(request.referrer)
+
+        # Prepare update data
+        updated_promo = {
+            "deal-text": request.form.get("deal-text"),
+            "expire-date": request.form.get("expire-date"),
+        }
+
+        # Only update the image if a new one was uploaded
+        if image_data:
+            updated_promo["deal-image"] = image_data
+        else:
+            updated_promo["deal-image"] = get_promo["deal-image"]  # Keep old image
+
+        # Perform the update in MongoDB
+        update = mongo.db.deals.update_one(
+            {"_id": ObjectId(edit_id)},
+            {"$set": updated_promo}
+        )
+
+        if update.modified_count > 0:
+            flash("Promo successfully updated!", "success")
+        else:
+            flash("No changes made or an error occurred.", "warning")
+
+        return redirect(request.referrer)
 
 # delete promo

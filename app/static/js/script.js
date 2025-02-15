@@ -49,8 +49,19 @@ const models = (modal_id, trigger) => {
             form.setAttribute("action", `/edit_review/${review_id}`);
 
             const textarea_value = document.getElementById("edit-review-text")
-            console.log(review_text)
             textarea_value.placeholder = review_text
+        }
+
+        if (modal_id == "edit-deal") {
+            const deal_id = trigger.getAttribute("data-id");
+            const deal_text = trigger.getAttribute("data-text")
+
+            // Update form action dynamically
+            const form = document.getElementById("edit-deal-form");
+            form.setAttribute("action", `/edit_promo/${deal_id}`);
+
+            const textarea_value = document.getElementById("edit-review-text")
+            textarea_value.placeholder = deal_text
         }
     } else {
         console.error(`Modal with ID '${modal_id}' not found.`);
