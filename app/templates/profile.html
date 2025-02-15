@@ -69,8 +69,8 @@
                         {{ deal["deal-text"] }}
                     </div>
                     <div class="col s1 edit">
-                        <a class="modal-trigger" href="#edit-review" data-id=""
-                            data-text="">
+                        <a class="modal-trigger" href="#edit-deal" data-id="{{ deal['_id'] }}"
+                            data-text="deal['deal-text']">
                             <i class="material-icons edit_note">edit</i>
                         </a>
                     </div>
@@ -385,6 +385,41 @@
                 <div class="input-field col s6">
                     <label for="expire-date">Enter the expiry date</label>
                     <input type="date" name="expire-date" class="datepicker" required>
+                </div>
+
+                <div class="file-field input-field col s6">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="deal_image" required>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" name="deal_image" type="text"
+                            placeholder="Upload one image to promote your deal">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn teal">Create Deal</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit deal modal -->
+    <div id="edit-deal" class="modal">
+        <div class="modal-content">
+            <h4>Edit Deal</h4>
+            <form action="" method="POST"
+                enctype="multipart/form-data">
+                <div class="input-field col s12">
+                    <textarea id="deal-text" name="deal-text" class="materialize-textarea" class="deal-text" value="{{ deal['deal-text'] }}"
+                        required></textarea>
+                    <label for="deal-text">What promo do you have?</label>
+                </div>
+
+                <input type="hidden" name="date" class="datefeild">
+
+                <div class="input-field col s6">
+                    <label for="expire-date">Enter the expiry date</label>
+                    <input type="date" name="expire-date" class="datepicker" value="{{ deal['expire-date'] }}" required>
                 </div>
 
                 <div class="file-field input-field col s6">
