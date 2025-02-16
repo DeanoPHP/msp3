@@ -122,7 +122,7 @@ def about():
     return render_template("about.html")
 
 
-def getImages():
+def getImages(image_name):
     """
     Handles image upload, encodes it in Base64, and returns the encoded data.
 
@@ -137,8 +137,8 @@ def getImages():
                    flashes a failure message, and redirects to the registration page.
     """
     image_data = None
-    if "profile_image" in request.files:
-        image_file = request.files["profile_image"]
+    if image_name in request.files:
+        image_file = request.files[image_name]
         if image_file.filename != "":
             try:
                 # Read the image file and encode it as Base64
@@ -147,7 +147,7 @@ def getImages():
                 return image_data
             except Exception as e:
                 print("Error reading image:", e)
-                flash("Failed to process profile image.", "danger")
+                flash(f"Failed to process {image_name}.", "danger")
                 return redirect(url_for("main.register"))
 
 
@@ -335,7 +335,7 @@ def edit_details(user_id):
             flash("User not found", "danger")
             return redirect(url_for('main.profile', username=session['user']))
 
-        image_data = getImages()
+        image_data = getImages("profile_image")
 
         # Build the updated details dictionary
         updated_details = {
@@ -920,38 +920,20 @@ def edit_promo(edit_id):
     Allows users to edit a promo, including updating text, expiration date, and image.
     """
     if request.method == "POST":
-        get_promo = mongo.db.deals.find_one({
-            "_id": ObjectId(edit_id)
-        })
+        get_promo = mongo.db.deals.find_one({"_id": ObjectId(edit_id)})
 
         if not get_promo:
             flash("Sorry, we cannot find that promo", "danger")
             return redirect(request.referrer)
-
-        # Check if an image was uploaded
-        image_data = None
-        if "deal-image" in request.files:
-            image_file = request.files["deal-image"]
-            if image_file.filename != "":  # Check if the file is selected
-                try:
-                    # Read and encode image in Base64
-                    image_data = base64.b64encode(image_file.read()).decode("utf-8")
-                except Exception as e:
-                    print("Error processing image:", e)
-                    flash("Failed to process deal image.", "danger")
-                    return redirect(request.referrer)
+        
+        image_data = getImages("deal-image")
 
         # Prepare update data
         updated_promo = {
             "deal-text": request.form.get("deal-text"),
             "expire-date": request.form.get("expire-date"),
+            "deal_image": image_data if image_data else get_promo['deal_image']
         }
-
-        # Only update the image if a new one was uploaded
-        if image_data:
-            updated_promo["deal-image"] = image_data
-        else:
-            updated_promo["deal-image"] = get_promo["deal-image"]  # Keep old image
 
         # Perform the update in MongoDB
         update = mongo.db.deals.update_one(
@@ -959,11 +941,12 @@ def edit_promo(edit_id):
             {"$set": updated_promo}
         )
 
-        if update.modified_count > 0:
-            flash("Promo successfully updated!", "success")
-        else:
-            flash("No changes made or an error occurred.", "warning")
-
+        if not update:
+            flash("Sorry something has gone wrong", "danger")
+            return redirect(request.referrer)
+        
+        flash("You have successfully updated your promo", "success")
         return redirect(request.referrer)
+
 
 # delete promo

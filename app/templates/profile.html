@@ -66,7 +66,8 @@
                             alt="promo image">
                     </div>
                     <div style="padding:20px;text-align:left;" class="col s7">
-                        {{ deal["deal-text"] }}
+                        <p>{{ deal["deal-text"] }}</p>
+                        <p>Expire Date: {{ deal["expire-date"] }}</p>
                     </div>
                     <div class="col s1 edit">
                         <a class="modal-trigger" href="#edit-deal" data-id="{{ deal['_id'] }}"
@@ -409,9 +410,10 @@
             <h4>Edit Deal</h4>
             <form action="" id="edit-deal-form" method="POST"
                 enctype="multipart/form-data">
+
                 <div class="input-field col s12">
-                    <textarea id="deal-text" name="deal-text" class="materialize-textarea" class="deal-text" value="{{ deal['deal-text'] }}"
-                        required></textarea>
+                    <textarea id="deal-text" name="deal-text" class="materialize-textarea" class="deal-text"
+                        required>{{ deal["deal-text"] }}</textarea>
                     <label for="deal-text">What promo do you have?</label>
                 </div>
 
@@ -425,7 +427,7 @@
                 <div class="file-field input-field col s6">
                     <div class="btn">
                         <span>File</span>
-                        <input type="file" name="deal_image" required>
+                        <input type="file" name="deal-image" required>
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" name="deal_image" type="text"
