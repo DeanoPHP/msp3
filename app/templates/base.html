@@ -83,18 +83,22 @@
             <div class="container">
                 <div class="row">
                     <div class="col l6 s12">
-                        <h5 class="white-text">Mind Your Own Business</h5>
-                        <p class="grey-text text-lighten-4">You can use rows and columns here to organize your
-                            footer
-                            content.</p>
+                        <h5>Contact Us</h5>
+                        <ul class="black-text text-lighten-1">
+                            <li>Email: <span class="grey-text">mind-your-own-business@gmail.com</span></li>
+                            <li>Tel: <span class="grey-text">07398092318</span></li>
+                            <li>Address: <span class="grey-text">7 North Road, Horfield, BS32 7EP</span></li>
+                        </ul>
                     </div>
                     <div class="col l4 offset-l2 s12">
                         <h5 class="white-text">Links</h5>
                         <ul>
-                            <li><a class="grey-text text-lighten-3" href="#!">Home</a></li>
-                            <li><a class="grey-text text-lighten-3" href="#!">About</a></li>
-                            <li><a class="grey-text text-lighten-3" href="#!">Contact</a></li>
-                            <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ url_for('main.home') }}">Home</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ url_for('main.about') }}">About</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ url_for('main.deals') }}">Deals</a></li>
+                            {% if "user" in session %}
+                            <li><a class="grey-text text-lighten-3" href="{{ url_for('main.profile', username=session['user']) }}">Profile</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
