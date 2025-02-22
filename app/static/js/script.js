@@ -96,10 +96,26 @@ const form_auto_date = () => {
     datefeild.value = formattedDate;
 }
 
+const create_deal_datepicker = () => {
+    const datePicker = document.querySelector('.datepicker');
+
+    M.Datepicker.init(datePicker, {
+        format: "dd-mm-yyyy", 
+        showClearBtn: true, 
+        autoClose: true, 
+        firstDay: 1, 
+        container: document.body,
+        onOpen: function() {
+            datePicker.removeAttribute("placeholder"); // Remove "dd/mm/yyyy"
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     sidenav();
     flash_messages();
     model_triggers();
     review_style();
     form_auto_date();
+    create_deal_datepicker();
 })
