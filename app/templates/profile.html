@@ -47,409 +47,425 @@
                 <div class="row">
                     <div class="business_images_container col s12">
                         <div class="row">
+                            {% set image_count = business['images']|length %} {# Get total number of images #}
+
                             {% for image in business['images'] %}
-                                <div class="col s12 m4">
+                            {# Default class: s12 for small screens #}
+                            {% if loop.last and image_count % 2 != 0 %}
+                            {# If it's the last image and the total count is odd, make it full width on medium+ screens
+                            #}
+                            <div class="col s12 m12 l12">
+                                {% else %}
+                                {# All other images get m6 on medium+ screens #}
+                                <div class="col s12 m6 l6">
+                                    {% endif %}
                                     <img class="business_images" src="data:image/jpeg;base64,{{ image }}"
                                         alt="Business Image">
                                 </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <hr>
+                    <hr>
 
-                <!-- Display business promo -->
-                {% if deal %}
-                <h5>Promo</h5>
-                <div class="row row-deal">
-                    <div class="col s3">
-                        <img class="deal-image" src="data:image/jpeg;base64,{{ deal['deal-image'] }}" width="60px"
-                            height="60px" alt="promo image">
-                    </div>
-                    <div class="col s7">
-                        <p>{{ deal["deal-text"] }}</p>
-                        <p><span style="color: navy;font-weight:bold;">Expiry Date: </span>{{ deal["expire-date"] }}</p>
-                    </div>
-                    <div class="split-buttons">
-                        <div class="col s6 edit">
-                            <a class="modal-trigger" href="#edit-deal" data-id="{{ deal['_id'] }}"
-                                data-text="{{ deal['deal-text'] }}">
-                                <i class="material-icons edit_note">edit</i>
-                            </a>
+                    <!-- Display business promo -->
+                    {% if deal %}
+                    <h5>Promo</h5>
+                    <div class="row row-deal">
+                        <div class="col s3">
+                            <img class="deal-image" src="data:image/jpeg;base64,{{ deal['deal-image'] }}" width="60px"
+                                height="60px" alt="promo image">
                         </div>
-                        <div class="col s6 delete">
-                            <form action="{{ url_for('main.deal_delete', delete_id=deal['_id']) }}" method="POST">
-                                <input type="hidden" name="profile_username" value="">
-                                <button class="button1-style" type="submit">
-                                    <i class="material-icons red-text">delete</i>
-                                </button>
+                        <div class="col s7">
+                            <p>{{ deal["deal-text"] }}</p>
+                            <p><span style="color: navy;font-weight:bold;">Expiry Date: </span>{{ deal["expire-date"] }}
+                            </p>
+                        </div>
+                        <div class="split-buttons">
+                            <div class="col s6 edit">
+                                <a class="modal-trigger" href="#edit-deal" data-id="{{ deal['_id'] }}"
+                                    data-text="{{ deal['deal-text'] }}">
+                                    <i class="material-icons edit_note">edit</i>
+                                </a>
+                            </div>
+                            <div class="col s6 delete">
+                                <form action="{{ url_for('main.deal_delete', delete_id=deal['_id']) }}" method="POST">
+                                    <input type="hidden" name="profile_username" value="">
+                                    <button class="button1-style" type="submit">
+                                        <i class="material-icons red-text">delete</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <p class="no-promo">We currently have no promotions to offer.</p>
+                    {% endif %}
+
+                    <hr>
+
+                    <!-- Reviews area -->
+                    <div id="review-area">
+                        <h5>{{ business["company_name"] }} Reviews</h5>
+
+                        <!-- Review form -->
+                        <div class="row">
+                            <form class="col s12"
+                                action="{{ url_for('main.add_review', username=username, business_id=business['owner_id'] if business and business['_id'] else 'none') }}"
+                                method="POST">
+                                <div class="row">
+                                    <div class="input-field col s7 review-textarea">
+                                        <textarea id="reviews" name="reviews" class="materialize-textarea"
+                                            required></textarea>
+                                        <label for="reviews">Write a review for {{ business['company_name'] }}</label>
+                                    </div>
+
+                                    <input type="hidden" name="datefeild" id="datefeild">
+
+                                    <button class="btn waves-effect waves-light s5 review-button" type="submit"
+                                        name="action" id="review-submit">Add Review
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
                             </form>
                         </div>
+
+                        <!-- Display reviews -->
+                        <ul>
+                            {% for review in reviews %}
+                            <div class="review-container">
+                                <div class="row">
+                                    <div class="col s2">
+                                        <img class="review-image"
+                                            src="data:image/jpeg;base64, {{ review['profile_image'] }}"
+                                            alt="profile image">
+                                    </div>
+                                    <div class="col s6 review-text">{{ review['text'] }}</div>
+                                    <div class="split-buttons">
+                                        <div class="col s2 edit">
+                                            <a class="modal-trigger" href="#edit-review" data-id="{{ review['_id'] }}"
+                                                data-text="{{ review['text'] }}">
+                                                <i class="material-icons edit_note">edit</i>
+                                            </a>
+                                        </div>
+                                        <div class="col s2 delete">
+                                            <form action="{{ url_for('main.review_delete', review_id=review['_id'] ) }}"
+                                                method="POST">
+                                                <input type="hidden" name="profile_username"
+                                                    value="{{ user['username'] }}">
+                                                <button class="button1-style" type="submit">
+                                                    <i class="material-icons red-text">delete</i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% else %}
+                            <li>No reviews yet for this profile.</li>
+                            {% endfor %}
+                        </ul>
+
+                        {% else %}
+                        <h5>You do not have a business to display.</h5>
+                        {% endif %}
                     </div>
                 </div>
-                {% else %}
-                <p class="no-promo">We currently have no promotions to offer.</p>
-                {% endif %}
 
-                <hr>
-
-                <!-- Reviews area -->
-                <div id="review-area">
-                    <h5>{{ business["company_name"] }} Reviews</h5>
-
-                    <!-- Review form -->
-                    <div class="row">
-                        <form class="col s12"
-                            action="{{ url_for('main.add_review', username=username, business_id=business['owner_id'] if business and business['_id'] else 'none') }}"
-                            method="POST">
-                            <div class="row">
-                                <div class="input-field col s7 review-textarea">
-                                    <textarea id="reviews" name="reviews" class="materialize-textarea"
-                                        required></textarea>
-                                    <label for="reviews">Write a review for {{ business['company_name'] }}</label>
-                                </div>
-
-                                <input type="hidden" name="datefeild" id="datefeild">
-
-                                <button class="btn waves-effect waves-light s5 review-button" type="submit"
-                                    name="action" id="review-submit">Add Review
-                                    <i class="material-icons right">send</i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Display reviews -->
-                    <ul>
-                        {% for review in reviews %}
-                        <div class="review-container">
-                            <div class="row">
-                                <div class="col s2">
-                                    <img class="review-image"
-                                        src="data:image/jpeg;base64, {{ review['profile_image'] }}" alt="profile image">
-                                </div>
-                                <div class="col s6 review-text">{{ review['text'] }}</div>
-                                <div class="split-buttons">
-                                    <div class="col s2 edit">
-                                        <a class="modal-trigger" href="#edit-review" data-id="{{ review['_id'] }}"
-                                            data-text="{{ review['text'] }}">
-                                            <i class="material-icons edit_note">edit</i>
-                                        </a>
-                                    </div>
-                                    <div class="col s2 delete">
-                                        <form action="{{ url_for('main.review_delete', review_id=review['_id'] ) }}"
-                                            method="POST">
-                                            <input type="hidden" name="profile_username" value="{{ user['username'] }}">
-                                            <button class="button1-style" type="submit">
-                                                <i class="material-icons red-text">delete</i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        {% else %}
-                        <li>No reviews yet for this profile.</li>
-                        {% endfor %}
-                    </ul>
-
+                <div class="business-right">
+                    {% if business %}
+                    <div class="business-logo"></div>
+                    <p><b>Category:</b> {{ business['category'] }}</p>
+                    <p><b>Location:</b> {{ business['location'] }}</p>
+                    <p><b>Email:</b> {{ business['contact_info']['email'] }}</p>
+                    <p><b>Phone:</b> {{ business['contact_info']['phone'] }}</p>
+                    <p><b>Website:</b> <a href="https://{{ business['contact_info']['website'] }}" target="_blank">{{
+                            business['contact_info']['website'] }}</a></p>
+                    {% if session["user"] == user["username"] %}
+                    {% if not deal %}
+                    <p><a class="modal-trigger" href="#create-deal">Create a deal</a></p>
+                    {% endif %}
+                    <p><a class="btn red modal-trigger" href="#deleteBusinessModal">Delete Business</a></p>
+                    {% endif %}
                     {% else %}
-                    <h5>You do not have a business to display.</h5>
+                    <h5>No business info</h5>
                     {% endif %}
                 </div>
             </div>
+        </div>
 
-            <div class="business-right">
-                {% if business %}
-                <div class="business-logo"></div>
-                <p><b>Category:</b> {{ business['category'] }}</p>
-                <p><b>Location:</b> {{ business['location'] }}</p>
-                <p><b>Email:</b> {{ business['contact_info']['email'] }}</p>
-                <p><b>Phone:</b> {{ business['contact_info']['phone'] }}</p>
-                <p><b>Website:</b> <a href="https://{{ business['contact_info']['website'] }}" target="_blank">{{
-                        business['contact_info']['website'] }}</a></p>
-                {% if session["user"] == user["username"] %}
-                {% if not deal %}
-                <p><a class="modal-trigger" href="#create-deal">Create a deal</a></p>
-                {% endif %}
-                <p><a class="btn red modal-trigger" href="#deleteBusinessModal">Delete Business</a></p>
-                {% endif %}
-                {% else %}
-                <h5>No business info</h5>
-                {% endif %}
+        <!-- Modal form to edit profile info-->
+        <div id="edit-details" class="modal">
+            <div class="modal-content">
+                <h4>Edit Your Details</h4>
+                <form action="{{ url_for('main.edit_details', user_id=user['_id']) }}" method="POST"
+                    enctype="multipart/form-data">
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">U</i>
+                        <input type="text" name="username" id="username-input" class="autocomplete"
+                            value="{{ user['username'] }}">
+                        <label for="username-input">Username</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">E</i>
+                        <input type="email" name="email" id="email-input" class="autocomplete"
+                            value="{{ user['email'] }}">
+                        <label for="email-input">Email</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">N</i>
+                        <input type="text" name="name" id="name-input" class="autocomplete"
+                            value="{{ user['profile']['name'] }}">
+                        <label for="name-input">Name</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">P</i>
+                        <input type="text" name="postcode" id="postcode-input" class="autocomplete"
+                            value="{{ user['profile']['postcode'] }}">
+                        <label for="postcode-input">Postcode</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">B</i>
+                        <input type="text" name="bio" id="bio-input" class="autocomplete"
+                            value="{{ user['profile']['bio'] }}">
+                        <label for="bio-input">Bio</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">T</i>
+                        <input type="tel" name="phoneNo" id="phoneNo-input" class="autocomplete"
+                            value="{{ user['profile']['phoneNo'] }}">
+                        <label for="phoneNo-input">Phone Number</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">F</i>
+                        <input type="file" name="profile_image" id="profile_image" class="autocomplete">
+                        <label for="phoneNo-input">Change Image</label>
+                    </div>
+
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal for adding a business -->
+        <div id="add-business" class="modal">
+            <div class="modal-content">
+                <h4>Add Your Business</h4>
+                <form action="{{ url_for('main.add_business', user_id=user['_id']) }}" method="POST"
+                    enctype="multipart/form-data">
+                    <!-- Company Name -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">business</i>
+                        <input type="text" name="company_name" id="company-name">
+                        <label for="company-name">Company Name</label>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">description</i>
+                        <input type="text" name="description" id="description">
+                        <label for="description">Description</label>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">location_on</i>
+                        <input type="text" name="location" id="location">
+                        <label for="location">Location</label>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">category</i>
+                        <select name="category">
+                            <option value="" disabled selected>Choose one that best fits your business</option>
+                            <option value="cleaning services">Cleaning Services</option>
+                            <option value="gardening">Gardening & Landscape</option>
+                            <option value="hair and beauty">Hair & Beauty</option>
+                            <option value="child care and education">Child care & education</option>
+                            <option value="building and trades">Building & Trades</option>
+                            <option value="health fitness and sport">Health, Fitness, & Sport</option>
+                            <option value="retail and crafts">Retail, & Crafts</option>
+                            <option value="professional services">Professional Services</option>
+                        </select>
+                    </div>
+
+                    <!-- Business Images Upload -->
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <i class="material-icons left">cloud_upload</i>
+                            <span>Upload</span>
+                            <input type="file" name="business_images" multiple required>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">email</i>
+                        <input type="email" name="email" id="email">
+                        <label for="email">Email</label>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">phone</i>
+                        <input type="tel" name="phone" id="phone">
+                        <label for="phone">Phone</label>
+                    </div>
+
+                    <!-- Website -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">language</i>
+                        <input type="text" name="website" id="website">
+                        <label for="website">Website</label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button class="btn waves-effect waves-light" type="submit" name="action">
+                        Submit <i class="material-icons right">add_circle</i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal for editing reviews -->
+        <div id="edit-review" class="modal">
+            <div class="modal-content">
+                <h4>Edit Your Review</h4>
+                <form action="" id="edit-review-form" method="POST">
+                    <div class="row">
+                        <div class="input-field col s9 review-textarea">
+                            <textarea id="edit-review-text" name="review" class="materialize-textarea"
+                                required></textarea>
+                            <label for="edit-review-text" class="active"></label>
+                        </div>
+
+                        <input type="hidden" name="datefeild" id="datefeild">
+
+                        <button class="btn waves-effect waves-light s3 review-button" type="submit" name="action"
+                            id="review-submit">Update Review
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Delete business modal -->
+        <div id="deleteBusinessModal" class="modal">
+            <div class="modal-content">
+                <h4>Confirm Business Account Deletion</h4>
+                <p>Are you sure you want to delete your business account?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="{{ url_for('main.delete_business', business_user_id=user['_id']) }}"
+                    style="display: inline;">
+                    <button type="submit" name="confirm" value="yes" class="btn red">Yes, Delete</button>
+                </form>
+                <a class="modal-close btn grey">Cancel</a>
+            </div>
+        </div>
+
+        <!-- Delete account modal -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <h4>Confirm Account Deletion</h4>
+                <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="{{ url_for('main.delete_account', username=username) }}"
+                    style="display: inline;">
+                    <button type="submit" name="confirm" value="yes" class="btn red">Yes, Delete</button>
+                </form>
+                <a class="modal-close btn grey">Cancel</a>
+            </div>
+        </div>
+
+        <!-- create a deal modal -->
+        <div id="create-deal" class="modal">
+            <div class="modal-content">
+                <h4>Create A Deal</h4>
+                <form action="{{ url_for('main.create_deal', business_id=business['owner_id']) }}" method="POST"
+                    enctype="multipart/form-data">
+                    <div class="input-field col s12">
+                        <textarea id="deal-text" name="deal-text" class="materialize-textarea" class="deal-text"
+                            value="" required></textarea>
+                        <label for="deal-text">What promotion do you want to display?</label>
+                    </div>
+
+                    <input type="hidden" name="date" class="datefeild">
+
+                    <div class="input-field col s6">
+                        <label for="expire-date">Enter the expiry date</label>
+                        <input type="text" name="expire-date" class="datepicker" required>
+                    </div>
+
+                    <div class="file-field input-field col s6">
+                        <div class="btn">
+                            <span>File</span>
+                            <input type="file" name="deal-image" required>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" name="deal-image" type="text"
+                                placeholder="Upload one image to promote your deal">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn teal">Create Deal</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit deal modal -->
+        <div id="edit-deal" class="modal">
+            <div class="modal-content">
+                <h4>Edit Deal</h4>
+                <form action="" id="edit-deal-form" method="POST" enctype="multipart/form-data">
+                    {% if deal %}
+                    <div class="input-field col s12">
+                        <textarea id="deal-text" name="deal-text" class="materialize-textarea" class="deal-text"
+                            required>{{
+                            deal["deal-text"] }}</textarea>
+                        <label for="deal-text">What promo do you have?</label>
+                    </div>
+
+                    <input type="hidden" name="date" class="datefeild">
+
+                    <div class="input-field col s6">
+                        <label for="expire-date">Enter the expiry date</label>
+                        <input type="date" name="expire-date" class="datepicker" value="{{ deal['expire-date'] }}"
+                            required>
+                    </div>
+
+                    <div class="file-field input-field col s6">
+                        <div class="btn">
+                            <span>File</span>
+                            <input type="file" name="deal-image">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" name="deal_image" type="text"
+                                placeholder="Upload a new image">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn teal">Create Deal</button>
+                    {% endif %}
+                </form>
             </div>
         </div>
     </div>
-
-    <!-- Modal form to edit profile info-->
-    <div id="edit-details" class="modal">
-        <div class="modal-content">
-            <h4>Edit Your Details</h4>
-            <form action="{{ url_for('main.edit_details', user_id=user['_id']) }}" method="POST"
-                enctype="multipart/form-data">
-
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">U</i>
-                    <input type="text" name="username" id="username-input" class="autocomplete"
-                        value="{{ user['username'] }}">
-                    <label for="username-input">Username</label>
-                </div>
-
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">E</i>
-                    <input type="email" name="email" id="email-input" class="autocomplete" value="{{ user['email'] }}">
-                    <label for="email-input">Email</label>
-                </div>
-
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">N</i>
-                    <input type="text" name="name" id="name-input" class="autocomplete"
-                        value="{{ user['profile']['name'] }}">
-                    <label for="name-input">Name</label>
-                </div>
-
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">P</i>
-                    <input type="text" name="postcode" id="postcode-input" class="autocomplete"
-                        value="{{ user['profile']['postcode'] }}">
-                    <label for="postcode-input">Postcode</label>
-                </div>
-
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">B</i>
-                    <input type="text" name="bio" id="bio-input" class="autocomplete"
-                        value="{{ user['profile']['bio'] }}">
-                    <label for="bio-input">Bio</label>
-                </div>
-
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">T</i>
-                    <input type="tel" name="phoneNo" id="phoneNo-input" class="autocomplete"
-                        value="{{ user['profile']['phoneNo'] }}">
-                    <label for="phoneNo-input">Phone Number</label>
-                </div>
-
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">F</i>
-                    <input type="file" name="profile_image" id="profile_image" class="autocomplete">
-                    <label for="phoneNo-input">Change Image</label>
-                </div>
-
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                    <i class="material-icons right">send</i>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal for adding a business -->
-    <div id="add-business" class="modal">
-        <div class="modal-content">
-            <h4>Add Your Business</h4>
-            <form action="{{ url_for('main.add_business', user_id=user['_id']) }}" method="POST"
-                enctype="multipart/form-data">
-                <!-- Company Name -->
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">business</i>
-                    <input type="text" name="company_name" id="company-name">
-                    <label for="company-name">Company Name</label>
-                </div>
-
-                <!-- Description -->
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">description</i>
-                    <input type="text" name="description" id="description">
-                    <label for="description">Description</label>
-                </div>
-
-                <!-- Location -->
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">location_on</i>
-                    <input type="text" name="location" id="location">
-                    <label for="location">Location</label>
-                </div>
-
-                <!-- Category -->
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">category</i>
-                    <select name="category">
-                        <option value="" disabled selected>Choose one that best fits your business</option>
-                        <option value="cleaning services">Cleaning Services</option>
-                        <option value="gardening">Gardening & Landscape</option>
-                        <option value="hair and beauty">Hair & Beauty</option>
-                        <option value="child care and education">Child care & education</option>
-                        <option value="building and trades">Building & Trades</option>
-                        <option value="health fitness and sport">Health, Fitness, & Sport</option>
-                        <option value="retail and crafts">Retail, & Crafts</option>
-                        <option value="professional services">Professional Services</option>
-                    </select>
-                </div>
-
-                <!-- Business Images Upload -->
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <i class="material-icons left">cloud_upload</i>
-                        <span>Upload</span>
-                        <input type="file" name="business_images" multiple required>
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" placeholder="Upload one or more files">
-                    </div>
-                </div>
-
-                <!-- Email -->
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">email</i>
-                    <input type="email" name="email" id="email">
-                    <label for="email">Email</label>
-                </div>
-
-                <!-- Phone -->
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">phone</i>
-                    <input type="tel" name="phone" id="phone">
-                    <label for="phone">Phone</label>
-                </div>
-
-                <!-- Website -->
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">language</i>
-                    <input type="text" name="website" id="website">
-                    <label for="website">Website</label>
-                </div>
-
-                <!-- Submit Button -->
-                <button class="btn waves-effect waves-light" type="submit" name="action">
-                    Submit <i class="material-icons right">add_circle</i>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal for editing reviews -->
-    <div id="edit-review" class="modal">
-        <div class="modal-content">
-            <h4>Edit Your Review</h4>
-            <form action="" id="edit-review-form" method="POST">
-                <div class="row">
-                    <div class="input-field col s9 review-textarea">
-                        <textarea id="edit-review-text" name="review" class="materialize-textarea"
-                            required></textarea>
-                        <label for="edit-review-text" class="active"></label>
-                    </div>
-
-                    <input type="hidden" name="datefeild" id="datefeild">
-
-                    <button class="btn waves-effect waves-light s3 review-button" type="submit" name="action"
-                        id="review-submit">Update Review
-                        <i class="material-icons right">send</i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Delete business modal -->
-    <div id="deleteBusinessModal" class="modal">
-        <div class="modal-content">
-            <h4>Confirm Business Account Deletion</h4>
-            <p>Are you sure you want to delete your business account?</p>
-        </div>
-        <div class="modal-footer">
-            <form method="POST" action="{{ url_for('main.delete_business', business_user_id=user['_id']) }}"
-                style="display: inline;">
-                <button type="submit" name="confirm" value="yes" class="btn red">Yes, Delete</button>
-            </form>
-            <a class="modal-close btn grey">Cancel</a>
-        </div>
-    </div>
-
-    <!-- Delete account modal -->
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <h4>Confirm Account Deletion</h4>
-            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
-        </div>
-        <div class="modal-footer">
-            <form method="POST" action="{{ url_for('main.delete_account', username=username) }}"
-                style="display: inline;">
-                <button type="submit" name="confirm" value="yes" class="btn red">Yes, Delete</button>
-            </form>
-            <a class="modal-close btn grey">Cancel</a>
-        </div>
-    </div>
-
-    <!-- create a deal modal -->
-    <div id="create-deal" class="modal">
-        <div class="modal-content">
-            <h4>Create A Deal</h4>
-            <form action="{{ url_for('main.create_deal', business_id=business['owner_id']) }}" method="POST"
-                enctype="multipart/form-data">
-                <div class="input-field col s12">
-                    <textarea id="deal-text" name="deal-text" class="materialize-textarea" class="deal-text" value=""
-                        required></textarea>
-                    <label for="deal-text">What promotion do you want to display?</label>
-                </div>
-
-                <input type="hidden" name="date" class="datefeild">
-
-                <div class="input-field col s6">
-                    <label for="expire-date">Enter the expiry date</label>
-                    <input type="text" name="expire-date" class="datepicker" required>
-                </div>
-
-                <div class="file-field input-field col s6">
-                    <div class="btn">
-                        <span>File</span>
-                        <input type="file" name="deal-image" required>
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" name="deal-image" type="text"
-                            placeholder="Upload one image to promote your deal">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn teal">Create Deal</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Edit deal modal -->
-    <div id="edit-deal" class="modal">
-        <div class="modal-content">
-            <h4>Edit Deal</h4>
-            <form action="" id="edit-deal-form" method="POST" enctype="multipart/form-data">
-                {% if deal %}
-                <div class="input-field col s12">
-                    <textarea id="deal-text" name="deal-text" class="materialize-textarea" class="deal-text" required>{{
-                        deal["deal-text"] }}</textarea>
-                    <label for="deal-text">What promo do you have?</label>
-                </div>
-
-                <input type="hidden" name="date" class="datefeild">
-
-                <div class="input-field col s6">
-                    <label for="expire-date">Enter the expiry date</label>
-                    <input type="date" name="expire-date" class="datepicker" value="{{ deal['expire-date'] }}" required>
-                </div>
-
-                <div class="file-field input-field col s6">
-                    <div class="btn">
-                        <span>File</span>
-                        <input type="file" name="deal-image">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" name="deal_image" type="text"
-                            placeholder="Upload a new image">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn teal">Create Deal</button>
-                {% endif %}
-            </form>
-        </div>
-    </div>
-</div>
-{% endblock %}
+    {% endblock %}
