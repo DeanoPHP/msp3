@@ -381,40 +381,36 @@ def add_business(user_id):
     - Collects business details from the form and constructs a business object.
     - Inserts the new business into the database.
     - Redirects the user back to their profile with a success or error message.
-
-    Args:
-        user_id (str): The unique identifier of the user adding the business.
-
-    Returns:
-        - If the user is not logged in: Redirects to the profile page with an error message.
-        - If no images are uploaded: Redirects back to the form with a warning message.
-        - If the business is successfully added: Redirects to the user's profile with a success message.
-        - If an error occurs during insertion: Redirects to the profile page with an error message.
     """
     if request.method == "POST":
-
         current_user = get_current_user()
 
         if not current_user:
-            flash("You must be a logged in user to create a business", "danger")
+            flash("You must be logged in to create a business", "danger")
             return redirect(url_for("main.profile", username=current_user))
 
         if "business_images" not in request.files or not request.files.getlist("business_images"):
             flash("You have not uploaded any images", "warning")
             return redirect(request.url)
 
+        # Debug: Print form data to check if category is received
+        print("Form data:", request.form)
+
+        # Get category (Ensure it is not None)
+        category = request.form.get("category")
+        if not category:
+            flash("Please select a category for your business.", "danger")
+            return redirect(request.url)
+
         # Get the files
-        files = request.files.getlist('business_images')
+        files = request.files.getlist("business_images")
         encoded_images = []
 
         # Process each image
         for file in files:
             if file:  # Ensure the file is not empty
-                # Read image content
                 image_content = file.read()
-                # Encode image to Base64
-                encoded_image = base64.b64encode(
-                    image_content).decode("utf-8")
+                encoded_image = base64.b64encode(image_content).decode("utf-8")
                 encoded_images.append(encoded_image)
 
         business_to_add = {
@@ -422,7 +418,7 @@ def add_business(user_id):
             "company_name": request.form.get("company_name"),
             "description": request.form.get("description"),
             "location": request.form.get("location"),
-            "category": request.form.get("category"),
+            "category": category,  # ✅ Ensure category is added
             "images": encoded_images,
             "contact_info": {
                 "email": request.form.get("email"),
@@ -438,7 +434,6 @@ def add_business(user_id):
             return redirect(url_for("main.profile", username=current_user['username']))
 
         flash("Your business has been added successfully", "success")
-        print(current_user)
         return redirect(url_for("main.profile", username=current_user['username']))
 
 
