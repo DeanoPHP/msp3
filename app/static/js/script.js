@@ -49,7 +49,7 @@ const models = (modal_id, trigger) => {
             form.setAttribute("action", `/edit_review/${review_id}`);
 
             const textarea_value = document.getElementById("edit-review-text")
-            textarea_value.placeholder = review_text
+            textarea_value.value = review_text
         }
 
         if (modal_id == "edit-deal") {
