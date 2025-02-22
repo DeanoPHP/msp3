@@ -204,7 +204,7 @@ button[type="submit"] {
     background-size: 100% 100%;
 }
 
-/* ----------------------------------profile (deal area) */
+/* ----------------------------------profile (deal/promo area) */
 .row-deal {
     padding: 20px 0 20px 0;
     display: flex;
@@ -436,7 +436,7 @@ footer .container {
         margin: 0 auto !important;
     }
     
-    .row {
+    .row-deal > .row {
         margin: 0 auto !important;
     }
     
@@ -444,7 +444,7 @@ footer .container {
         margin: 0 auto !important;
     }
 
-    .edit-delete-container {
+    .split-buttons {
         display: flex;
         flex-direction: row; /* Keep edit & delete on the same row */
         justify-content: space-between;
@@ -458,4 +458,27 @@ footer .container {
         align-items: center;
     }
     
+    .review-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 20px auto !important;
+    }
+
+    .review-container .row {
+        margin: 0 auto !important;
+    }
+
+    .review-container .col {
+        margin: 0 auto !important;
+    }
+
+    .review-container .row .col:nth-child(1) {
+        width: 100%;
+    }
+
+    .review-container .row .col:nth-child(2) {
+        width: 100%;
+        padding: 20px 20px;
+    }
 }

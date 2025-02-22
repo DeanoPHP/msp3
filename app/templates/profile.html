@@ -71,7 +71,7 @@
                         <p>{{ deal["deal-text"] }}</p>
                         <p><span style="color: navy;font-weight:bold;">Expiry Date: </span>{{ deal["expire-date"] }}</p>
                     </div>
-                    <div class="edit-delete-container">
+                    <div class="split-buttons">
                         <div class="col s6 edit">
                             <a class="modal-trigger" href="#edit-deal" data-id="{{ deal['_id'] }}"
                                 data-text="{{ deal['deal-text'] }}">
@@ -130,21 +130,24 @@
                                         src="data:image/jpeg;base64, {{ review['profile_image'] }}" alt="profile image">
                                 </div>
                                 <div class="col s6 review-text">{{ review['text'] }}</div>
-                                <div class="col s2 edit">
-                                    <a class="modal-trigger" href="#edit-review" data-id="{{ review['_id'] }}"
-                                        data-text="{{ review['text'] }}">
-                                        <i class="material-icons edit_note">edit</i>
-                                    </a>
+                                <div class="split-buttons">
+                                    <div class="col s2 edit">
+                                        <a class="modal-trigger" href="#edit-review" data-id="{{ review['_id'] }}"
+                                            data-text="{{ review['text'] }}">
+                                            <i class="material-icons edit_note">edit</i>
+                                        </a>
+                                    </div>
+                                    <div class="col s2 delete">
+                                        <form action="{{ url_for('main.review_delete', review_id=review['_id'] ) }}"
+                                            method="POST">
+                                            <input type="hidden" name="profile_username" value="{{ user['username'] }}">
+                                            <button class="button1-style" type="submit">
+                                                <i class="material-icons red-text">delete</i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="col s2 delete">
-                                    <form action="{{ url_for('main.review_delete', review_id=review['_id'] ) }}"
-                                        method="POST">
-                                        <input type="hidden" name="profile_username" value="{{ user['username'] }}">
-                                        <button class="button1-style" type="submit">
-                                            <i class="material-icons red-text">delete</i>
-                                        </button>
-                                    </form>
-                                </div>
+
                             </div>
                         </div>
                         {% else %}
