@@ -74,7 +74,7 @@ i.material-icons {
 
 /* ----------------------------------Cards Home */
 .card {
-    height: 260px;
+    min-height: 350px;
     flex-grow: 1;
     border-radius: 10px;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -392,6 +392,11 @@ footer .container {
     /* Styles for mobile devices */
     .brand-logo {
         font-size: 12px !important;
+    }
+
+    /* ----------------------------------Cards Home */
+    .card {
+        min-height: 150px;
     }
 
     .main-container,
