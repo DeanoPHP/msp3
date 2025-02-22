@@ -290,6 +290,10 @@ button[type="submit"] {
     justify-content: center;
 }
 
+.bold-text {
+    font-weight: bold;
+}
+
 /* ----------------------------------BTN styles */
 .danger {
     border: 1px solid red;

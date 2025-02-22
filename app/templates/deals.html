@@ -8,16 +8,16 @@
     <div class="category-deals-card-container">
         <div class="row">
             <div class="category-deals-image col s2">
-                <img class="deal-image" src="data:image/jpeg;base64,{{ deal['deal-image'] }}" width="120px"
-                    height="120px" alt="">
+                <img src="data:image/jpeg;base64,{{ deal['deal-image'] }}" width="100%"
+                    height="60%" alt="">
             </div>
-            <div class="category_description col s10">
-                <p>{{ deal["deal-text"] }}</p>
-                <p>{{ deal["expire-date"] }}</p>
+            <div class="category-deals-description col s10">
+                <p><span class="bold-text">Promo Description: </span>{{ deal["deal-text"] }}</p>
+                <p><span class="bold-text">Expiry Date: </span>{{ deal["expire-date"] }}</p>
 
                 <form action="{{ url_for('main.deals') }}" method="POST" class="deals-form">
                     <input type="hidden" name="user_id" value="{{ deal['business_owner'] }}">
-                    <button type="submit" class="deals-right-image"></button>
+                    <button type="submit" class="btn">View Profile</button>
                 </form>
             </div>
         </div>
