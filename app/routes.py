@@ -777,6 +777,7 @@ def delete_account(username):
 
 
 @main.route("/create_deal/<business_id>", methods=["GET", "POST"])
+@logged_in_user()
 def create_deal(business_id):
     """
     Handles the creation of a new business deal.
@@ -915,9 +916,26 @@ def deals():
 
 
 @main.route("/edit_promo/<edit_id>", methods=["GET", "POST"])
+@logged_in_user()
 def edit_promo(edit_id):
     """
     Allows users to edit a promo, including updating text, expiration date, and image.
+
+    GET request:
+        - Fetches the current promo details from the database to display in the edit form.
+
+    POST request:
+        - Updates the existing promo in the database with new details from the form.
+        - If an image is uploaded, replaces the old image; otherwise, retains the existing image.
+        - If the promo does not exist, flashes an error message.
+        - If the update is unsuccessful, flashes an error message.
+
+    Args:
+        edit_id (str): The unique identifier (_id) of the promo to be edited.
+
+    Returns:
+        - On success: Redirects back to the referring page with a success message.
+        - On failure: Redirects back to the referring page with an error message.
     """
     if request.method == "POST":
         get_promo = mongo.db.deals.find_one({"_id": ObjectId(edit_id)})
@@ -950,7 +968,27 @@ def edit_promo(edit_id):
 
 
 @main.route("/deal_delete/<delete_id>", methods=["GET", "POST"])
+@logged_in_user()
 def deal_delete(delete_id):
+    """
+    Deletes a specific deal from the database.
+
+    GET request:
+        - Typically, this endpoint should not process a GET request.
+        - A GET request to this route does nothing unless explicitly handled elsewhere.
+
+    POST request:
+        - Deletes the deal from the database using its unique ID.
+        - If the deletion is unsuccessful, flashes an error message.
+        - If successful, flashes a confirmation message and redirects.
+
+    Args:
+        delete_id (str): The unique identifier (_id) of the deal to be deleted.
+
+    Returns:
+        - On success: Redirects back to the referring page with a success message.
+        - On failure: Redirects back to the referring page with an error message.
+    """
     if request.method == "POST":
         delete_deal = mongo.db.deals.delete_one({
             "_id": ObjectId(delete_id)
