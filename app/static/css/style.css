@@ -356,6 +356,7 @@ footer .container {
     }
 
     .main-container,
+    .profile-container,
     .business-container,
     .container-searched-category {
         flex-direction: column;
