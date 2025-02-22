@@ -49,9 +49,20 @@
                 </div>
 
                 <!-- File Upload Button -->
-                <div class="input-field col s12">
-                    <label for="file-upload-button" class="custom-upload-button">Add A Profile Image</label>
+                <!-- <div class="input-field col s12">
+                    <label for="file-upload-button">Add A Profile Image</label>
                     <input type="file" id="file-upload-button" name="profile_image">
+                </div> -->
+
+                <div class="file-field input-field col s12">
+                    <div class="btn">
+                        <i class="material-icons left">cloud_upload</i>
+                        <span>Upload</span>
+                        <input type="file" name="profile_image" required>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Upload a profile image">
+                    </div>
                 </div>
 
                 <div class="input-field col s12">

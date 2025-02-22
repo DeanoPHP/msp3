@@ -72,6 +72,11 @@ i.material-icons {
     margin: 20px auto;
 }
 
+/* register */
+.register-image-upload {
+    margin: 300px;
+}
+
 /* ----------------------------------Cards Home */
 .card {
     min-height: 350px;
@@ -101,29 +106,6 @@ i.material-icons {
     min-height: 100vh;
     margin: 10px auto;
     padding: 20px 10px 30px 10px;
-}
-
-/* File Upload Button */
-.custom-upload-button {
-    background-color: #d4dadf;
-    color: #333 !important;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer !important;
-    border-radius: 5px;
-    font-size: 16px;
-    text-align: center;
-}
-
-/* Hover effect */
-.custom-upload-button:hover {
-    background-color: #383a3a;
-    color: #fff !important;
-}
-
-/* Hide the default file input */
-#file-upload-button {
-    display: none;
 }
 
 /* Style submit button */
