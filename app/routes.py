@@ -932,7 +932,7 @@ def edit_promo(edit_id):
         updated_promo = {
             "deal-text": request.form.get("deal-text"),
             "expire-date": request.form.get("expire-date"),
-            "deal_image": image_data if image_data else get_promo['deal_image']
+            "deal-image": image_data if image_data else get_promo['deal-image']
         }
 
         # Perform the update in MongoDB
