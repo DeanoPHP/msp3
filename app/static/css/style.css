@@ -59,8 +59,7 @@ i.material-icons {
     width: 100%;
     min-height: 800px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
     padding: 10px;
 }
 
@@ -129,6 +128,10 @@ button[type="submit"] {
 }
 
 /* ----------------------------------Profile page */
+.profile-container {
+    display: flex;
+}
+
 .left-content,
 .right-content {
     padding: 10px;

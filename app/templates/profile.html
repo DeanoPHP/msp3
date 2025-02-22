@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Profile page {{ user["profile"].name }} {% endblock %}
 {% block main %}
-<div class="main-container">
+<div class="profile-container">
     <div class="left-content">
         <div class="profile-image">
             {% if user.profile.profile_image %}
@@ -48,10 +48,10 @@
                     <div class="business_images_container col s12">
                         <div class="row">
                             {% for image in business['images'] %}
-                            <div class="col s12 m4">
-                                <img class="business_images" src="data:image/jpeg;base64,{{ image }}"
-                                    alt="Business Image">
-                            </div>
+                                <div class="col s12 m4">
+                                    <img class="business_images" src="data:image/jpeg;base64,{{ image }}"
+                                        alt="Business Image">
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
