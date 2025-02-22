@@ -421,7 +421,7 @@
         <div class="modal-content">
             <h4>Edit Deal</h4>
             <form action="" id="edit-deal-form" method="POST" enctype="multipart/form-data">
-
+                {% if deal %}
                 <div class="input-field col s12">
                     <textarea id="deal-text" name="deal-text" class="materialize-textarea" class="deal-text" required>{{
                         deal["deal-text"] }}</textarea>
@@ -447,6 +447,7 @@
                 </div>
 
                 <button type="submit" class="btn teal">Create Deal</button>
+                {% endif %}
             </form>
         </div>
     </div>

@@ -179,7 +179,7 @@ def register():
             flash("A user with that username already exist", "danger")
             return redirect(request.url)
 
-        image_data = getImages()
+        image_data = getImages("profile_image")
 
         register = {
             "username": request.form.get("username").lower(),

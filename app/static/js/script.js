@@ -27,6 +27,11 @@ const model_triggers = () => {
     });
 }
 
+const initialize_select_dropdown = () => {
+    const elems = document.querySelectorAll('select');
+    M.FormSelect.init(elems);
+};
+
 // Created this function to handle all modals 
 const models = (modal_id, trigger) => {
     // Get the modal element by ID
@@ -115,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sidenav();
     flash_messages();
     model_triggers();
+    initialize_select_dropdown();
     review_style();
     form_auto_date();
     create_deal_datepicker();
