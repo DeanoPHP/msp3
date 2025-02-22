@@ -79,7 +79,7 @@
                             </a>
                         </div>
                         <div class="col s6 delete">
-                            <form action="" method="POST">
+                            <form action="{{ url_for('main.deal_delete', delete_id=deal['_id']) }}" method="POST">
                                 <input type="hidden" name="profile_username" value="">
                                 <button class="button1-style" type="submit">
                                     <i class="material-icons red-text">delete</i>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 {% else %}
-                <p>We currently have no offers to display.</p>
+                <p class="no-promo">We currently have no promotions to offer.</p>
                 {% endif %}
 
                 <hr>
@@ -403,10 +403,10 @@
                 <div class="file-field input-field col s6">
                     <div class="btn">
                         <span>File</span>
-                        <input type="file" name="deal_image" required>
+                        <input type="file" name="deal-image" required>
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" name="deal_image" type="text"
+                        <input class="file-path validate" name="deal-image" type="text"
                             placeholder="Upload one image to promote your deal">
                     </div>
                 </div>

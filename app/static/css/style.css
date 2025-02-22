@@ -214,6 +214,11 @@ button[type="submit"] {
     border-radius: 90px;
 }
 
+.no-promo {
+    color: red;
+    font-size: 18px;
+}
+
 /* ----------------------------------profile (review area) */
 #review-area {
     padding: 20px 0;

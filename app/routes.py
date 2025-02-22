@@ -817,12 +817,12 @@ def create_deal(business_id):
         # check whether user owns account
         if current_user['_id'] == business_owner['owner_id']:
 
-            if "deal_image" not in request.files or not request.files["deal_image"].filename:
+            if "deal-image" not in request.files or not request.files["deal-image"].filename:
                 flash("No image uploaded", "danger")
                 return redirect(request.url)
 
             # Get file
-            file = request.files["deal_image"]
+            file = request.files["deal-image"]
 
             if file:  # Ensure the file is not empty
                 # Read image content
@@ -838,7 +838,7 @@ def create_deal(business_id):
                     "deal-text": request.form.get("deal-text"),
                     "date": request.form.get("date"),
                     "expire-date": request.form.get("expire-date"),
-                    "deal_image": encoded_image
+                    "deal-image": encoded_image
                 }
 
                 upload_deal = mongo.db.deals.insert_one(create)
@@ -949,4 +949,16 @@ def edit_promo(edit_id):
         return redirect(request.referrer)
 
 
-# delete promo
+@main.route("/deal_delete/<delete_id>", methods=["GET", "POST"])
+def deal_delete(delete_id):
+    if request.method == "POST":
+        delete_deal = mongo.db.deals.delete_one({
+            "_id": ObjectId(delete_id)
+        })
+
+        if not delete_deal:
+            flash("How embarressing, Something has gone wrong", "warning")
+            return redirect(request.referrer)
+        
+        flash("Successfully deleted", "success")
+        return redirect(request.referrer)
