@@ -4,6 +4,7 @@
 :root {
     --heading-font-family: 'Poppins', sans-serif;
     --color-coral: #FF7F50;
+    --color-navy: #2C3E50;
 }
 
 h1,
@@ -14,6 +15,7 @@ h5 {
     font-family: var(--heading-font-family);
     font-weight: 400;
     text-transform: uppercase;
+    color: var(--color-coral);
 }
 
 html,
@@ -41,7 +43,7 @@ body {
 }
 
 .nav-wrapper .brand-logo {
-    color: #263238;
+    color: var(--color-navy);
     text-transform: uppercase;
     font-weight: bold;
     font-family: var(--heading-font-family);
@@ -204,12 +206,19 @@ button[type="submit"] {
 
 /* ----------------------------------profile (deal area) */
 .row-deal {
-    background-color: #FF7F50;
     padding: 20px 0 20px 0;
     display: flex;
 }
 
+.deal-image {
+    border-radius: 90px;
+}
+
 /* ----------------------------------profile (review area) */
+#review-area {
+    padding: 20px 0;
+}
+
 .review-image {
     width: 60%;
     height: auto;
@@ -219,12 +228,17 @@ button[type="submit"] {
     border-radius: 90%;
 }
 
-.review {
+.review-text {
     text-align: left;
+    display: flex;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     padding: 10px;
+    white-space: normal;
 }
 
-.edit, .delete {
+.edit,
+.delete {
     height: 100px;
     display: flex;
     align-items: center;
@@ -233,6 +247,7 @@ button[type="submit"] {
 }
 
 .button1-style {
+    width: 100px !important;
     background: none;
     border: none;
     color: red;
@@ -261,7 +276,7 @@ button[type="submit"] {
     overflow: auto;
 }
 
-.category_card_container > .row {
+.category_card_container>.row {
     display: flex;
     width: 100%;
 }
@@ -274,7 +289,7 @@ button[type="submit"] {
 .category_image {
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
 }
 
 /* ----------------------------------deals.html */
@@ -311,9 +326,9 @@ button[type="submit"] {
 }
 
 .deals-form {
-    display: inline-block;  
-    margin: 0;  
-    padding: 0;  
+    display: inline-block;
+    margin: 0;
+    padding: 0;
 }
 
 .deals-right-image {
@@ -324,7 +339,8 @@ button[type="submit"] {
     background-size: cover;
     background-repeat: no-repeat;
     border: none;
-    background-color: transparent; /* Ensures no button background */
+    background-color: transparent;
+    /* Ensures no button background */
     cursor: pointer;
 }
 
@@ -411,4 +427,35 @@ footer .container {
         width: 50px;
         height: 50px;
     }
+
+    /* ----------------------------------profile (deal area) */
+    .row-deal {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0 auto !important;
+    }
+    
+    .row {
+        margin: 0 auto !important;
+    }
+    
+    .row-deal .col {
+        margin: 0 auto !important;
+    }
+
+    .edit-delete-container {
+        display: flex;
+        flex-direction: row; /* Keep edit & delete on the same row */
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .edit, .delete {
+        flex: 1; /* Makes them equal width */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
 }
