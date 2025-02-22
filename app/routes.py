@@ -650,7 +650,7 @@ def searched_category():
                {selected_category}""", "danger")
         return redirect(url_for("main.home"))
 
-    return render_template("searched_category.html", category=category)
+    return render_template("searched_category.html", category=category, selected_category=selected_category)
 
 
 @main.route("/delete_business/<business_user_id>", methods=["GET", "POST"])

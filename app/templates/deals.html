@@ -1,32 +1,28 @@
 {% extends "base.html" %}
 {% block title %} Deals {% endblock %}
 {% block main %}
-<div id="deals-wrapper">
-    <div class="row">
-        {% for deal in deals %}
-        <div class="col s12 deal-container">
-            <div class="image-left">
-                <p><img class="deals-image" src="data:image/jpeg;base64,{{ deal['deal_image'] }}" width="100px"
-                        height="100px" alt=""></p>
-            </div>
 
-            <div class="deals-content-center">
+<h5 class="categories-deals-title">Current available deals</h5>
+{% for deal in deals %}
+<div id="category-deals">
+    <div class="category-deals-card-container">
+        <div class="row">
+            <div class="category-deals-image col s2">
+                <img class="deal-image" src="data:image/jpeg;base64,{{ deal['deal-image'] }}" width="120px"
+                    height="120px" alt="">
+            </div>
+            <div class="category_description col s10">
                 <p>{{ deal["deal-text"] }}</p>
                 <p>{{ deal["expire-date"] }}</p>
-            </div>
 
-            <div class="deals-right">
                 <form action="{{ url_for('main.deals') }}" method="POST" class="deals-form">
                     <input type="hidden" name="user_id" value="{{ deal['business_owner'] }}">
                     <button type="submit" class="deals-right-image"></button>
                 </form>
             </div>
-            
         </div>
     </div>
 </div>
 {% endfor %}
-</div>
-</div>
 
 {% endblock %}

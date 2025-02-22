@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% block main %}
 
+<h5 class="categories-deals-title">Local bussinesses for {{ selected_category }}</h5>
 {% for cat in category %}
-<div id="category">
-    <div class="category_card_container">
+<div id="category-deals">
+    <div class="category-deals-card-container">
         <div class="row">
-            <div class="category_image col s2">
+            <div class="category-deals-image col s2">
                 <img src="https://i.etsystatic.com/14512607/r/il/033e20/5089214224/il_570xN.5089214224_kmpq.jpg"
                     width="100%" height="120px">
             </div>
-            <div class="category_description col s10">
+            <div class="category-deals-description col s10">
                 <span class="card-title">{{ cat["company_name"] }}</span>
                 <p>{{ cat["description"] }}</p>
 
