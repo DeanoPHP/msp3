@@ -14,7 +14,6 @@
 
         <!-- style.css -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', _external=True) }}">
-
     </head>
 
     <body>
@@ -119,6 +118,40 @@
 
         <!-- script.js -->
         <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    
+        <script>
+            var latLng = JSON.parse('{{ {"lat": lat|default(0), "lng": lng|default(0)} | tojson | safe }}');
+        
+            function initMap() {
+                var mapElement = document.getElementById("map");
+        
+                // ✅ Fix: Prevent running if #map is not on the page
+                if (!mapElement) {
+                    console.warn("Skipping Google Maps: No #map element found on this page.");
+                    return;
+                }
+        
+                console.log("Initializing Google Map with latLng:", latLng);
+        
+                var map = new google.maps.Map(mapElement, {
+                    zoom: 10,
+                    center: latLng
+                });
+        
+                new google.maps.Marker({
+                    position: latLng,
+                    map: map
+                });
+            }
+        
+            // ✅ Ensure initMap is globally accessible
+            window.initMap = initMap;
+        </script>
+        
+        
+        <!-- ✅ Google Maps API script should be last -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap"></script>
+        
     </body>
 
 </html>

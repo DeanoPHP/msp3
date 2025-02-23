@@ -1,3 +1,5 @@
+import os
+import requests
 from flask import (
     render_template,
     Blueprint,
@@ -108,6 +110,18 @@ def get_business_reviews(owners_id):
     return list(mongo.db.reviews.find({
         "business_id": ObjectId(owners_id)
     }))
+
+
+def get_lat_lng(address):
+    if not address:
+        return None, None
+    api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+    url = f"https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={api_key}"
+    response = requests.get(url).json()
+    if response["status"] == "OK":
+        location = response["results"][0]["geometry"]["location"]
+        return location["lat"], location["lng"]
+    return None, None
 
 
 @main.route("/")
@@ -280,7 +294,14 @@ def profile(username):
 
     get_business = get_business_owner(profile_user["_id"])
 
+    # Default lat/lng to None
+    lat, lng = None, None
+
     if get_business:
+        # Ensure get_lat_lng() does not break if location is missing
+        if "location" in get_business and get_business["location"]:
+            lat, lng = get_lat_lng(get_business["location"])
+        
         get_reviews = get_business_reviews(get_business["owner_id"])
 
         get_deal = mongo.db.deals.find_one({
@@ -293,15 +314,21 @@ def profile(username):
             business=get_business,
             user=profile_user,
             reviews=get_reviews,
+            lat=lat,
+            lng=lng,
             deal=get_deal or None
         )
 
+    # If the user does not own a business, still return lat/lng as None
     return render_template(
         "profile.html",
         username=username,
-        user=get_current_user(),
+        user=profile_user,
         business=None,
-        reviews=None
+        reviews=None,
+        lat=None,
+        lng=None,
+        deal=None
     )
 
 
@@ -393,11 +420,9 @@ def add_business(user_id):
             flash("You have not uploaded any images", "warning")
             return redirect(request.url)
 
-        # Debug: Print form data to check if category is received
-        print("Form data:", request.form)
-
         # Get category (Ensure it is not None)
         category = request.form.get("category")
+        
         if not category:
             flash("Please select a category for your business.", "danger")
             return redirect(request.url)
