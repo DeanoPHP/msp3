@@ -294,13 +294,17 @@ def profile(username):
 
     get_business = get_business_owner(profile_user["_id"])
 
+    get_all_businesses = mongo.db.business.find_one({
+        "owner_id": ObjectId(profile_user['_id'])
+    })
+
     # Default lat/lng to None
     lat, lng = None, None
 
     if get_business:
         # Ensure get_lat_lng() does not break if location is missing
-        if "location" in get_business and get_business["location"]:
-            lat, lng = get_lat_lng(get_business["location"])
+        if "location" in get_all_businesses and get_all_businesses["location"]:
+            lat, lng = get_lat_lng(get_all_businesses["location"])
         
         get_reviews = get_business_reviews(get_business["owner_id"])
 
@@ -316,6 +320,7 @@ def profile(username):
             reviews=get_reviews,
             lat=lat,
             lng=lng,
+            get_all_businesses=get_all_businesses,
             deal=get_deal or None
         )
 
@@ -328,6 +333,7 @@ def profile(username):
         reviews=None,
         lat=None,
         lng=None,
+        get_all_businesses=None,
         deal=None
     )
 
