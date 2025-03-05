@@ -13,7 +13,8 @@
         </div>
 
         {% if user %}
-        <h5 class="coral">Welcome, {{ user['profile'].name }}</h5>
+
+        <h5 class="coral">{{ user['profile'].name }}'s profile</h5>
 
         <ul>
             <p><b>Username:</b> {{ user["username"] }}</p>
@@ -187,14 +188,15 @@
                     {% if not deal %}
                     <p><a class="modal-trigger" href="#create-deal">Create a deal</a></p>
                     {% endif %}
+                    <p><a class="modal-trigger" href="#editBusinessModal">Edit Business Details</a></p>
                     <p><a class="btn red modal-trigger" href="#deleteBusinessModal">Delete Business</a></p>
                     {% endif %}
                     {% else %}
                     <h5>No business info</h5>
                     {% endif %}
                     {% if get_all_businesses %}
-                        <!-- Google Maps Container -->
-                        <div id="map" style="width: 100%; height: 400px;"></div>                   
+                    <!-- Google Maps Container -->
+                    <div id="map" style="width: 100%; height: 400px;"></div>
                     {% endif %}
                 </div>
             </div>
@@ -335,6 +337,114 @@
                     <div class="input-field col s12">
                         <i class="material-icons prefix">language</i>
                         <input type="text" name="website" id="website">
+                        <label for="website">Website</label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button class="btn waves-effect waves-light" type="submit" name="action">
+                        Submit <i class="material-icons right">add_circle</i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal for editing business details -->
+        <div id="editBusinessModal" class="modal">
+            <div class="modal-content">
+                <h4>Add Your Business</h4>
+                <form action="{{ url_for('main.edit_business', business_id=business['_id']) }}" method="POST"
+                    enctype="multipart/form-data">
+                    <!-- Company Name -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">business</i>
+                        <input type="text" name="company_name" id="company-name" value="{{ business['company_name'] }}">
+                        <label for="company-name">Company Name</label>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">description</i>
+                        <input type="text" name="description" id="description" value="{{ business['description'] }}">
+                        <label for="description">Description</label>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">location_on</i>
+                        <input type="text" name="location" id="location" value="{{ business['location'] }}">
+                        <label for="location">Location</label>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">category</i>
+                        <select name="category">
+                            <option value="" disabled>Choose one that best fits your business</option>
+                            <option value="cleaning services" {% if business['category']=='cleaning services'
+                                %}selected{% endif %}>Cleaning Services</option>
+                            <option value="gardening" {% if business['category']=='gardening' %}selected{% endif %}>
+                                Gardening & Landscape</option>
+                            <option value="hair and beauty" {% if business['category']=='hair and beauty' %}selected{%
+                                endif %}>Hair & Beauty</option>
+                            <option value="child care and education" {% if
+                                business['category']=='child care and education' %}selected{% endif %}>Child Care &
+                                Education</option>
+                            <option value="building and trades" {% if business['category']=='building and trades'
+                                %}selected{% endif %}>Building & Trades</option>
+                            <option value="health fitness and sport" {% if
+                                business['category']=='health fitness and sport' %}selected{% endif %}>Health, Fitness,
+                                & Sport</option>
+                            <option value="retail and crafts" {% if business['category']=='retail and crafts'
+                                %}selected{% endif %}>Retail & Crafts</option>
+                            <option value="professional services" {% if business['category']=='professional services'
+                                %}selected{% endif %}>Professional Services</option>
+                        </select>
+                    </div>
+
+                    <!-- Display Existing Business Images -->
+                    <div class="existing-images">
+                        <h6>Current Images:</h6>
+                        <div class="row">
+                            {% for image in business['images'] %}
+                            <div class="col s4">
+                                <img src="data:image/jpeg;base64,{{ image }}" class="business_images"
+                                    alt="Existing Business Image">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Business Images Upload -->
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <i class="material-icons left">cloud_upload</i>
+                            <span>Upload New Images (Optional)</span>
+                            <input type="file" name="business_images" multiple>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Upload one or more new files">
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">email</i>
+                        <input type="email" name="email" id="email" value="{{ business['contact_info']['email'] }}">
+                        <label for="email">Email</label>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">phone</i>
+                        <input type="tel" name="phone" id="phone" value="{{ business['contact_info']['phone'] }}">
+                        <label for="phone">Phone</label>
+                    </div>
+
+                    <!-- Website -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">language</i>
+                        <input type="text" name="website" id="website"
+                            value="{{ business['contact_info']['website'] }}">
                         <label for="website">Website</label>
                     </div>
 

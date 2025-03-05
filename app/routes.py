@@ -305,7 +305,7 @@ def profile(username):
         # Ensure get_lat_lng() does not break if location is missing
         if "location" in get_all_businesses and get_all_businesses["location"]:
             lat, lng = get_lat_lng(get_all_businesses["location"])
-        
+
         get_reviews = get_business_reviews(get_business["owner_id"])
 
         get_deal = mongo.db.deals.find_one({
@@ -428,7 +428,7 @@ def add_business(user_id):
 
         # Get category (Ensure it is not None)
         category = request.form.get("category")
-        
+
         if not category:
             flash("Please select a category for your business.", "danger")
             return redirect(request.url)
@@ -466,6 +466,79 @@ def add_business(user_id):
 
         flash("Your business has been added successfully", "success")
         return redirect(url_for("main.profile", username=current_user['username']))
+
+
+@main.route("/edit_business/<business_id>", methods=["GET", "POST"])
+def edit_business(business_id):
+    """
+    Handles business profile updates.
+
+    - Retrieves the current business details from the database.
+    - If the business does not exist, flashes an error message and redirects to the profile page.
+    - Retrieves form data for business updates (name, description, location, etc.).
+    - Processes optional image uploads while retaining existing images if none are uploaded.
+    - Updates only the fields provided in the form, keeping existing values for empty fields.
+    - Performs an update operation in the database.
+    - If the update is successful, flashes a success message and redirects to the profile page.
+
+    Args:
+        business_id (str): The unique identifier of the business to update.
+
+    Returns:
+        - If the business is not found: Redirects to the profile page with an error message.
+        - If the update is successful: Redirects to the profile page with a success message.
+    """
+
+    # Retrieve the business from the database
+    business = mongo.db.business.find_one({'_id': ObjectId(business_id)})
+
+    # If business does not exist, flash an error and redirect
+    if not business:
+        flash("We cannot find that business", "danger")
+        return redirect(url_for("main.profile", username=session["user"]))
+
+    # Retrieve form data from the request
+    company_name = request.form.get("company_name")
+    description = request.form.get("description")
+    location = request.form.get("location")
+    category = request.form.get("category")
+    email = request.form.get("email")
+    phone = request.form.get("phone")
+    website = request.form.get("website")
+
+    # Retrieve uploaded images from the request
+    new_images = request.files.getlist('business_images')
+
+    # Keep existing images if no new ones are uploaded
+    image_list = business['images'] if business and 'images' in business else [
+    ]
+
+    # Convert and append new images to the list if provided
+    for image in new_images:
+        if image and image.filename != '':
+            image_list.append(base64.b64encode(image.read()).decode('utf-8'))
+
+    # Prepare the updated business data
+    updated_business = {
+        "company_name": company_name,
+        "description": description,
+        "location": location,
+        "category": category,
+        "images": image_list,  # Retain old images if no new ones are uploaded
+        "contact_info": {
+            "email": email,
+            "phone": phone,
+            "website": website
+        }
+    }
+
+    # Perform the update operation in the database
+    mongo.db.business.update_one({'_id': ObjectId(business_id)}, {
+                                 '$set': updated_business})
+
+    # Flash a success message and redirect to the profile page
+    flash("Business details updated successfully", "success")
+    return redirect(url_for('main.profile', username=session["user"]))
 
 
 @main.route("/add_review/<username>/<business_id>", methods=["GET", "POST"])
@@ -723,7 +796,7 @@ def delete_business(business_user_id):
 
         mongo.db.reviews.delete_many(
             {"business_id": ObjectId(business_user_id)})
-        
+
         mongo.db.deals.delete_one({
             "business_owner": ObjectId(business_user_id)
         })
@@ -969,7 +1042,7 @@ def edit_promo(edit_id):
         if not get_promo:
             flash("Sorry, we cannot find that promo", "danger")
             return redirect(request.referrer)
-        
+
         image_data = getImages("deal-image")
 
         # Prepare update data
@@ -988,7 +1061,7 @@ def edit_promo(edit_id):
         if not update:
             flash("Sorry something has gone wrong", "danger")
             return redirect(request.referrer)
-        
+
         flash("You have successfully updated your promo", "success")
         return redirect(request.referrer)
 
@@ -1023,6 +1096,6 @@ def deal_delete(delete_id):
         if not delete_deal:
             flash("How embarressing, Something has gone wrong", "warning")
             return redirect(request.referrer)
-        
+
         flash("Successfully deleted", "success")
         return redirect(request.referrer)
