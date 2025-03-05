@@ -3,6 +3,7 @@
 
 {% block main %}
 
+{% if not 'user' in session %}
 <div class="pop-up">
     <div class="row padding-top">
         <div class="col s12 l8 offset-l2">
@@ -28,9 +29,9 @@
                     as Guest</a>
             </div>
         </div>
-
     </div>
 </div>
+{% endif %}
 
 <div class="row">
     <div class="col s12 m6 l3">
