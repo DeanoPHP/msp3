@@ -1,3 +1,14 @@
+const popup = () => {
+    const pop_window = document.querySelector(".pop-up")
+
+    if (!sessionStorage.getItem("popup")) {
+        setTimeout(() => {
+            pop_window.style.display = "block";
+            sessionStorage.setItem("popup", true)
+        }, 1000)
+    }
+}
+
 const sidenav = () => {
     // For side nav
     var elems = document.querySelectorAll('.sidenav');
@@ -105,18 +116,19 @@ const create_deal_datepicker = () => {
     const datePicker = document.querySelector('.datepicker');
 
     M.Datepicker.init(datePicker, {
-        format: "dd-mm-yyyy", 
-        showClearBtn: true, 
-        autoClose: true, 
-        firstDay: 1, 
+        format: "dd-mm-yyyy",
+        showClearBtn: true,
+        autoClose: true,
+        firstDay: 1,
         container: document.body,
-        onOpen: function() {
+        onOpen: function () {
             datePicker.removeAttribute("placeholder"); // Remove "dd/mm/yyyy"
         }
     });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    popup();
     sidenav();
     flash_messages();
     model_triggers();
