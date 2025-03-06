@@ -627,28 +627,36 @@ def edit_review(review_id):
             "_id": ObjectId(review_id)
         })
 
+        curent_user = get_current_user()
+
         if not get_review:
             flash("Sorry we are unable to find that review", "danger")
             return redirect(url_for("main.profile", username=session["user"]))
 
-        updated_review = {
-            "business_id": ObjectId(get_review["business_id"]),
-            "user_id": ObjectId(get_review["user_id"]),
-            "profile_image": get_review["profile_image"],
-            "text": request.form.get("review"),
-            "date": request.form.get("datefeild"),
-        }
+        # Check whether the current user owns the review
+        if ObjectId(get_review["user_id"]) == ObjectId(curent_user["_id"]):
 
-        update_to_db = mongo.db.reviews.update_one(
-            {"_id": ObjectId(review_id)},
-            {"$set": updated_review}
-        )
+            updated_review = {
+                "business_id": ObjectId(get_review["business_id"]),
+                "user_id": ObjectId(get_review["user_id"]),
+                "profile_image": get_review["profile_image"],
+                "text": request.form.get("review"),
+                "date": request.form.get("datefeild"),
+            }
 
-        if not update_to_db:
-            flash("Sorry something has gone wrong", "danger")
+            update_to_db = mongo.db.reviews.update_one(
+                {"_id": ObjectId(review_id)},
+                {"$set": updated_review}
+            )
+
+            if not update_to_db:
+                flash("Sorry something has gone wrong", "danger")
+                return redirect(request.referrer)
+
+            flash("Updated Successfully!!", "success")
             return redirect(request.referrer)
 
-        flash("Updated Successfully!!", "success")
+        flash("You must be the review owner to edit", "warning")
         return redirect(request.referrer)
 
     return redirect(request.referrer)
@@ -674,18 +682,29 @@ def review_delete(review_id):
         A Flask redirect response to either the user's profile page (after deletion) or the home page for GET requests.
     """
     if request.method == "POST":
-        review_to_delete = mongo.db.reviews.delete_one({
+        current_user = get_current_user()
+
+        get_review_to_delete = mongo.db.reviews.find_one({
             "_id": ObjectId(review_id)
         })
 
-        profile_username = request.form.get("profile_username")
+        if ObjectId(current_user["_id"]) == ObjectId(get_review_to_delete["user_id"]):
 
-        if not review_to_delete:
-            flash("Sorry something went wrong", "danger")
+            review_to_delete = mongo.db.reviews.delete_one({
+                "_id": ObjectId(review_id)
+            })
+
+            profile_username = request.form.get("profile_username")
+
+            if not review_to_delete:
+                flash("Sorry something went wrong", "danger")
+                return redirect(url_for('main.profile', username=profile_username))
+
+            flash("Deleted Successfully!", "success")
             return redirect(url_for('main.profile', username=profile_username))
 
-        flash("Deleted Successfully!", "success")
-        return redirect(url_for('main.profile', username=profile_username))
+        flash("You must own the review to delete it", "warning")
+        return redirect(request.referrer)
 
     return redirect(url_for("main.home"))
 
