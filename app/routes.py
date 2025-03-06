@@ -1062,26 +1062,33 @@ def edit_promo(edit_id):
             flash("Sorry, we cannot find that promo", "danger")
             return redirect(request.referrer)
 
-        image_data = getImages("deal-image")
+        current_user = get_current_user()
 
-        # Prepare update data
-        updated_promo = {
-            "deal-text": request.form.get("deal-text"),
-            "expire-date": request.form.get("expire-date"),
-            "deal-image": image_data if image_data else get_promo['deal-image']
-        }
+        if ObjectId(get_promo["business_owner"]) == ObjectId(current_user["_id"]):
 
-        # Perform the update in MongoDB
-        update = mongo.db.deals.update_one(
-            {"_id": ObjectId(edit_id)},
-            {"$set": updated_promo}
-        )
+            image_data = getImages("deal-image")
 
-        if not update:
-            flash("Sorry something has gone wrong", "danger")
+            # Prepare update data
+            updated_promo = {
+                "deal-text": request.form.get("deal-text"),
+                "expire-date": request.form.get("expire-date"),
+                "deal-image": image_data if image_data else get_promo['deal-image']
+            }
+
+            # Perform the update in MongoDB
+            update = mongo.db.deals.update_one(
+                {"_id": ObjectId(edit_id)},
+                {"$set": updated_promo}
+            )
+
+            if not update:
+                flash("Sorry something has gone wrong", "danger")
+                return redirect(request.referrer)
+
+            flash("You have successfully updated your promo", "success")
             return redirect(request.referrer)
 
-        flash("You have successfully updated your promo", "success")
+        flash("You must be the business owner to edit the deal", "warning")
         return redirect(request.referrer)
 
 
@@ -1108,13 +1115,22 @@ def deal_delete(delete_id):
         - On failure: Redirects back to the referring page with an error message.
     """
     if request.method == "POST":
-        delete_deal = mongo.db.deals.delete_one({
-            "_id": ObjectId(delete_id)
-        })
+        current_user = get_current_user()
 
-        if not delete_deal:
-            flash("How embarressing, Something has gone wrong", "warning")
+        get_promo = mongo.db.deals.find_one({"_id": ObjectId(delete_id)})
+
+        if ObjectId(get_promo["business_owner"]) == ObjectId(current_user["_id"]):    
+
+            delete_deal = mongo.db.deals.delete_one({
+                "_id": ObjectId(delete_id)
+            })
+
+            if not delete_deal:
+                flash("How embarressing, Something has gone wrong", "warning")
+                return redirect(request.referrer)
+
+            flash("Successfully deleted", "success")
             return redirect(request.referrer)
 
-        flash("Successfully deleted", "success")
+        flash("You must be business owner to delete promo", "warning")
         return redirect(request.referrer)
