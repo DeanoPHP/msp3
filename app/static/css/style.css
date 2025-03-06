@@ -357,6 +357,12 @@ button[type="submit"] {
     margin: 0 10px 0 10px;
 }
 
+/* ----------------------------- Google maps API */
+#map {
+    width: 100%;
+    height: 400px;
+}
+
 /* ----------------------------------Footer */
 footer {
     background-color: #eceff1 !important;
