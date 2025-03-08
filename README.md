@@ -73,10 +73,39 @@ To ensure a seamless experience, **Mind Your Own Business** is designed with the
 - I want to **remove inactive or fraudulent accounts** to maintain platform integrity.  
 - I want to **analyze platform usage data** to improve user experience and features.  
 
-## Skeleton 
-| Page | Desktop | Tablet | Mobile |
-|------|---------|--------|--------|
+## 📱 Responsive Design  
 
+Mind Your Own Business is fully responsive, ensuring a smooth experience across **desktop, tablet, and mobile** devices.
+
+### Wireframes
+*The following wireframes were created to plan the structure of the website.*  
+#### 🖥️ Desktop  
+![Desktop Home](docs/screenshots/home-desktop.png)
+![Desktop Profile](docs/screenshots/home-desktop.png)
+![Desktop Login](docs/screenshots/home-desktop.png)
+![Desktop Register](docs/screenshots/home-desktop.png)
+
+#### 📱 Mobile  
+*These are live screenshots of the implemented design on desktop and mobile devices.*
+![Mobile Sidenav](docs/screenshots/home-mobile.png)
+![Mobile Home](docs/screenshots/home-mobile.png)
+![Mobile Profile](docs/screenshots/home-mobile.png)
+![Mobile Login](docs/screenshots/home-mobile.png)
+![Mobile Register](docs/screenshots/home-mobile.png)
+
+### Actual Website
+#### 🖥️ Desktop  
+![Desktop Home](app/static/images/site-images/home-desktop.png)
+![Desktop Profile](app/static/images/site-images/profile-desktop.png)
+![Desktop Login](app/static/images/site-images/login-desktop.png)
+![Desktop Register](app/static/images/site-images/register-desktop.png)
+
+#### 📱 Mobile  
+![Mobile Sidenav](app/static/images/site-images/nav-mobile.png)
+![Mobile Home](app/static/images/site-images/home-mobile.png)
+![Mobile Profile](app/static/images/site-images/profile-mobile.png)
+![Mobile Login](app/static/images/site-images/login-mobile.png)
+![Mobile Register](app/static/images/site-images/register-mobile.png)
 
 ## Technologies and tools used
 + **HTML5:** For the basic structure.
@@ -215,6 +244,24 @@ git clone https://github.com/DeanoPHP/msp3
 
 Your website should now be live on GitHub Pages. You can access it via the URL provided in the GitHub Pages section of your repository settings.
 
-# Credits and Acknowledgments
-I would like to express my heartfelt gratitude to my mentor for his invaluable guidance and advice throughout this project.
-Additionally, I extend my sincere thanks all my tutors for their exceptional teaching and encouragement. Your dedication and expertise have greatly contributed to my learning journey, Thank you.
+## 💻 Code Attribution  
+
+This project includes code that was developed with the assistance of AI and external resources:  
+
+- **`logged_in_user()` Decorator** – A function to restrict access to routes that require authentication. AI was used to help refine the logic and improve efficiency.  
+- **`getImages()` Function** – A function to handle image uploads by encoding them in Base64. Initially, I attempted to use standard Python imports for image handling but encountered issues. With AI assistance, I found a working approach using Flask’s `request.files` and Base64 encoding.  
+- **Google Maps API Integration** – Implemented Google Maps to display business locations on profile pages. I used Google Docs to plan and document the implementation process and received some AI assistance to troubleshoot and refine the integration.  
+- **Image Implementation** – AI also helped guide the integration of image processing into my code when traditional methods didn’t work.  
+
+All other code was written by me, unless otherwise stated.  
+ 
+## 🙌 Credits and Acknowledgments  
+
+I would like to express my gratitude to:  
+
+- **My Mentor** – For providing valuable feedback and guidance throughout the development of this project.  
+- **The Teachers at Code Institute** – For their excellent instruction and support in my learning journey.  
+- **The Code Institute Community** – For offering insights, troubleshooting help, and motivation along the way.  
+- **Open-Source Contributors** – For the libraries, frameworks, and tools that made this project possible.  
+
+Thank you all for your support and contributions! 🚀
