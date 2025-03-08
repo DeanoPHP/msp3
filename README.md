@@ -1,4 +1,4 @@
-# Quizzy
+# MIND YOUR OWN BUSINESS
 ![Responsive](app/static/images/responsive.png)
 [Click here to view the live website](https://mind-your-own-business-5f784ff22ecb.herokuapp.com/)
 
@@ -91,12 +91,44 @@ To ensure a seamless experience, **Mind Your Own Business** is designed with the
 + **Github** For version control and collaboration.
 + **Gitpod** For cloud based development environment.  
 
-## Design Overview
+## 🎨 Design Overview  
 
-## Testing
-### Functional Testing
+Mind Your Own Business is designed to provide a **user-friendly experience** for both business owners and customers. The platform features a **clean, intuitive interface** that makes it easy to browse businesses, post promotions, and connect with local services.
+
+### 🖥️ Live Demo  
+🔗 **Check out the live website:** [Mind Your Own Business](https://mind-your-own-business-5f784ff22ecb.herokuapp.com/)
+
+### 🎯 Design Goals  
+- **Simplicity** – A streamlined, hassle-free experience for users to find businesses and post promotions.  
+- **Accessibility** – Fully responsive, ensuring smooth functionality across desktop, tablet, and mobile devices.  
+- **Local Focus** – A location-based approach to show businesses and deals within a **10-mile radius** of the user.  
+- **Authentication** – Secure login system for businesses to manage profiles and customers to engage with listings.  
+
+### 📌 UI & UX Features  
+- **👤 User-Friendly Navigation** – A simple, intuitive interface for easy browsing and interaction.  
+- **🌍 Location-Based Listings** – Businesses and promotions are tailored to local customers.  
+- **🎨 Responsive & Modern Design** – Built with **Materialize** for a clean, professional look.  
+- **🔒 Secure Authentication** – Users must register to access full business profiles and engage with owners.  
+
+## ✅ Testing  
+
+### 🛠️ Functional Testing  
+
 | Action | Expected Behaviour | Pass/Fail |
 |--------|--------------------|-----------|
+| User registers a new account | Account is created, and the user is redirected to their profile/dashboard | ✅ Pass |
+| User logs in with valid credentials | User is successfully authenticated and redirected to the homepage | ✅ Pass |
+| User logs in with incorrect credentials | Error message is displayed, and login is not allowed | ✅ Pass |
+| Business owner creates a profile | Business profile is saved and visible on the platform | ✅ Pass |
+| User adds a promotion | Promotion is saved and displayed under the business profile | ✅ Pass |
+| User tries to access a business profile without logging in | Access is restricted, and login prompt is displayed | ✅ Pass |
+| Search function is used | Businesses matching the search criteria are displayed | ✅ Pass |
+| Promotions are displayed on the homepage | Active promotions are shown to all users | ✅ Pass |
+| Logged-in user views a business profile | Full business details, including promotions, are visible | ✅ Pass |
+| Non-logged-in user views promotions | Promotions are visible, but full business details require login | ✅ Pass |
+| Business owner edits their profile | Changes are saved and updated on the platform | ✅ Pass |
+| Business owner deletes their profile | Profile is removed from the system | ✅ Pass |
+| User logs out | Session is cleared, and user is redirected to the homepage | ✅ Pass |
 
 
 ### HTML Test 
