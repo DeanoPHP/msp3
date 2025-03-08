@@ -174,7 +174,7 @@ Mind Your Own Business is designed to provide a **user-friendly experience** for
 
 3. Run the following command 
 ```sh
-git clone https://github.com/DeanoPHP/quizzy-msp2
+git clone https://github.com/DeanoPHP/msp3
 ```
 
 4. After cloning, navigate into the directory
@@ -193,7 +193,7 @@ git clone https://github.com/DeanoPHP/quizzy-msp2
 
 4. Clone your forked repository to your local machine:
 ```sh
-git clone https://github.com/DeanoPHP/quizzy-msp2
+git clone https://github.com/DeanoPHP/msp3
 ```
 
 5. Navigate to the cloned directory
