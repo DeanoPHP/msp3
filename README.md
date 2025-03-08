@@ -24,7 +24,7 @@ That's why I created **Mind Your Own Business**—a platform for **small busines
 
 Whether you're a **mobile hairdresser offering discounts, a cleaner looking for more clients, or a builder running a limited-time deal**, **Mind Your Own Business** helps you connect with the right customers and grow your business effortlessly.
 
-📢 **Join today and start promoting your business!** [Join Now](#)
+📢 **Join today and start promoting your business!** [Join Now](https://mind-your-own-business-5f784ff22ecb.herokuapp.com/register)
 
 ## 🔑 Key Features  
 
@@ -113,6 +113,7 @@ Mind Your Own Business is fully responsive, ensuring a smooth experience across 
 + **JavaScript:** For dynamic content and interactivity
 + **Python:** 
 + **Flask:** 
++ **Jenja template enging:** 
 + **MongoDB:** 
 + **Google Maps API:** For fetching data.
 + **Balsamiq:** For creating wireframes.
