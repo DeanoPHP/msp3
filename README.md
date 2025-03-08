@@ -80,8 +80,8 @@ Mind Your Own Business is fully responsive, ensuring a smooth experience across 
 ### Wireframes
 *The following wireframes were created to plan the structure of the website.*  
 #### 🖥️ Desktop  
-![Desktop Home](docs/screenshots/home-desktop.png)
-![Desktop Profile](docs/screenshots/home-desktop.png)
+![Desktop Home](app/static/images/wireframes/wireframe-home-desktop.jpeg)
+![Desktop Profile](app/static/images/wireframes/wireframes-profile-desktop.jpeg)
 ![Desktop Login](docs/screenshots/home-desktop.png)
 ![Desktop Register](docs/screenshots/home-desktop.png)
 
