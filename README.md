@@ -107,19 +107,31 @@ Mind Your Own Business is fully responsive, ensuring a smooth experience across 
 ![Mobile Login](app/static/images/site-images/login-mobile.png)
 ![Mobile Register](app/static/images/site-images/register-mobile.png)
 
-## Technologies and tools used
-+ **HTML5:** For the basic structure.
-+ **CSS3:** For styling the website.
-+ **JavaScript:** For dynamic content and interactivity
-+ **Python:** 
-+ **Flask:** 
-+ **Jenja template enging:** 
-+ **MongoDB:** 
-+ **Google Maps API:** For fetching data.
-+ **Balsamiq:** For creating wireframes.
-+ **Visual Studio:** As a code editor.
-+ **Github** For version control and collaboration.
-+ **Gitpod** For cloud based development environment.  
+## 🛠️ Technologies and Tools Used  
+
+### **Frontend**  
+- **HTML5** – Provides the foundational structure of the website.  
+- **CSS3** – Used for styling and responsive design.  
+- **JavaScript** – Enables dynamic content and interactivity.  
+
+### **Backend**  
+- **Python** – The core programming language for the application.  
+- **Flask** – A lightweight web framework used for building the backend.  
+- **Jinja Template Engine** – Used for rendering dynamic HTML pages.  
+
+### **Database & APIs**  
+- **MongoDB** – A NoSQL database used to store business and user data.  
+- **Google Maps API** – Used for fetching and displaying business locations on a map.  
+
+### **Development & Version Control**  
+- **Balsamiq** – Used for creating wireframes and planning UI design.  
+- **Visual Studio Code** – The primary code editor for development.  
+- **GitHub** – For version control, collaboration, and deployment integration.  
+- **GitPod** – A cloud-based development environment for coding anywhere.  
+
+### **Deployment & Hosting**  
+- **Heroku** – The platform used to deploy and host the application.  
+- **Gunicorn** – A WSGI server for running the Flask application in production.  
 
 ## 🎨 Design Overview  
 
@@ -233,18 +245,58 @@ git clone https://github.com/DeanoPHP/msp3
 
 6. You can now make changes to your fork and submit pull requests to the original repository.
 
-## Deployment Steps
-<hr>
+## 🚀 Deploying to Heroku  
 
-**Deploy to GitHub Pages**:
-   - Go to your GitHub repository on GitHub.
-   - Navigate to the repository settings.
-   - Scroll down to the "GitHub Pages" section.
-   - Under "Source", select the branch you want to deploy (usually `main` or `gh-pages`).
-   - Click "Save".
+This project is deployed to **Heroku** using **GitHub integration** for automatic updates. Follow the steps below to set up and deploy your Flask application.
 
-Your website should now be live on GitHub Pages. You can access it via the URL provided in the GitHub Pages section of your repository settings.
+### **1️⃣ Prerequisites**  
+Before deploying, ensure you have:  
+- A **GitHub repository** with your project code.  
+- A **Heroku account** – [Sign up here](https://signup.heroku.com/) if you don’t have one.  
+- The **Heroku CLI (optional)** – Install it from [Heroku CLI Docs](https://devcenter.heroku.com/articles/heroku-cli) if needed.  
 
+---
+
+### **2️⃣ Create a New Heroku App**  
+1. Log in to **Heroku** and go to your [Dashboard](https://dashboard.heroku.com/).  
+2. Click **"New" → "Create New App"**.  
+3. Enter a **unique app name** and select your **region** (United States or Europe).  
+4. Click **"Create App"**.  
+
+---
+
+### **3️⃣ Connect GitHub for Auto Deployment**  
+1. In the **Heroku Dashboard**, go to the **Deploy** tab.  
+2. Under **"Deployment Method"**, select **GitHub**.  
+3. Click **"Connect to GitHub"** and authorize Heroku to access your repositories.  
+4. Search for your **GitHub repository name** and click **"Connect"**.  
+5. Scroll down to **"Automatic Deploys"**, and click **"Enable Automatic Deploys"**.  
+   - This ensures Heroku will deploy updates whenever you push changes to **GitHub’s main branch**.  
+
+---
+
+### **4️⃣ Set Up Config Vars (Environment Variables)**  
+1. In the **Settings** tab of your Heroku app, scroll down to **Config Vars**.  
+2. Click **"Reveal Config Vars"**, then add the required variables:  
+
+| Variable | Description |
+|----------|-------------|
+| `SECRET_KEY` | Your Flask secret key for session security |
+| `DATABASE_URL` | Your PostgreSQL or MongoDB connection string |
+| `GOOGLE_MAPS_API_KEY` | Your API key for displaying Google Maps |
+| `DEBUG` | Set to `False` for production |
+
+3. Click **"Add"** after entering each variable.  
+
+---
+
+### **5️⃣ Add a `Procfile` (if not already present)**  
+In your project root directory, create a file named `Procfile` (no extension) and add:  
+
+```plaintext
+web: gunicorn app:app
+```
+  
 ## 💻 Code Attribution  
 
 This project includes code that was developed with the assistance of AI and external resources:  
