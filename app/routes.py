@@ -113,6 +113,20 @@ def get_business_reviews(owners_id):
 
 
 def get_lat_lng(address):
+    """
+    Retrieves the latitude and longitude for a given address using the Google Geocoding API.
+
+    This function takes a single address as input and makes a request to the Google Geocoding API.
+    It parses the JSON response to extract the latitude and longitude of the address. If the address
+    is empty or the API response is not successful, it returns (None, None).
+
+    Args:
+        address (str): The address for which to retrieve the geographical coordinates.
+
+    Returns:
+        tuple: A tuple containing the latitude and longitude of the given address. If the address
+            is invalid or an error occurs in the API call, returns (None, None).
+    """
     if not address:
         return None, None
     api_key = os.getenv("GOOGLE_MAPS_API_KEY")
@@ -1119,7 +1133,7 @@ def deal_delete(delete_id):
 
         get_promo = mongo.db.deals.find_one({"_id": ObjectId(delete_id)})
 
-        if ObjectId(get_promo["business_owner"]) == ObjectId(current_user["_id"]):    
+        if ObjectId(get_promo["business_owner"]) == ObjectId(current_user["_id"]):
 
             delete_deal = mongo.db.deals.delete_one({
                 "_id": ObjectId(delete_id)
