@@ -36,17 +36,6 @@ Whether you're a **mobile hairdresser offering discounts, a cleaner looking for 
 - **📱 Mobile-Friendly** – Seamlessly browse and manage your business from any device.  
 - **🔍 Search & Filter Options** – Easily find businesses and promotions based on category and location.  
 
-## 🔮 Future Features  
-
-🚧 *Upcoming enhancements to improve user experience and business visibility:*  
-
-- **📍 Location-Based Listings** – Businesses and promotions will be displayed only within a **10-mile radius** of the user’s location.  
-- **🔎 Advanced Search & Filters** – Users will be able to filter businesses by category, ratings, and proximity.  
-- **⭐ Customer Reviews & Ratings** – Implementing a review system where customers can leave feedback and rate businesses.  
-- **📅 Event & Booking System** – Businesses will be able to list upcoming events or accept customer bookings directly.  
-- **📨 Messaging System** – Secure in-app messaging for direct communication between businesses and customers.  
-- **📊 Business Insights Dashboard** – Analytics for business owners to track views, engagement, and customer interactions.  
-
 ## 👤 UX / User Stories  
 
 To ensure a seamless experience, **Mind Your Own Business** is designed with the following user stories in mind:
@@ -137,10 +126,8 @@ Mind Your Own Business is fully responsive, ensuring a smooth experience across 
 - **Google Maps API** – Used for fetching and displaying business locations on a map.  
 
 ### **Development & Version Control**  
-- **Balsamiq** – Used for creating wireframes and planning UI design.  
 - **Visual Studio Code** – The primary code editor for development.  
 - **GitHub** – For version control, collaboration, and deployment integration.  
-- **GitPod** – A cloud-based development environment for coding anywhere.  
 
 ### **Deployment & Hosting**  
 - **Heroku** – The platform used to deploy and host the application.  
