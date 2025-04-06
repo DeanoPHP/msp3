@@ -18,7 +18,7 @@ That's why I created **Mind Your Own Business**—a platform for **small busines
 - ✅ **Create a Business Profile** – Register and build a profile to introduce your business, services, and contact details.  
 - ✅ **Promote Your Services** – Easily add deals and special offers to attract local customers.  
 - ✅ **Browse Local Businesses** – Users can explore promotions and discover trusted businesses in their area.  
-- ✅ **Exclusive Access for Registered Users** – While promotions are visible to everyone, only registered members can view business profiles and connect with owners.  
+- ✅ **Exclusive Access for Registered Users** – While promotions are visible to everyone, only registered members can view business profiles and connect with owners.
 
 ## 💡 Why Choose Mind Your Own Business?  
 
@@ -343,5 +343,6 @@ I would like to express my gratitude to:
 - **The Teachers at Code Institute** – For their excellent instruction and support in my learning journey.  
 - **The Code Institute Community** – For offering insights, troubleshooting help, and motivation along the way.  
 - **Open-Source Contributors** – For the libraries, frameworks, and tools that made this project possible.  
+- **[GitHub Emoji Cheat Sheet](https://github.com/ikatyang/emoji-cheat-sheet)** – A super handy resource that made it quick and easy to add expressive emojis to my README file.
 
 Thank you all for your support and contributions! 🚀
