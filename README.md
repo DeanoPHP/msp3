@@ -73,6 +73,19 @@ To ensure a seamless experience, **Mind Your Own Business** is designed with the
 - I want to **remove inactive or fraudulent accounts** to maintain platform integrity.  
 - I want to **analyze platform usage data** to improve user experience and features.  
 
+## 🔮 Future Features  
+
+🚧 *Upcoming enhancements to improve user experience and business visibility:*  
+
+- **📍 Location-Based Listings** – Businesses and promotions will be displayed only within a **10-mile radius** of the user’s location.  
+- **🔎 Advanced Search & Filters** – Users will be able to filter businesses by category, ratings, and proximity.  
+- **⭐ Customer Reviews & Ratings** – Implementing a review system where customers can leave feedback and rate businesses.  
+- **📅 Event & Booking System** – Businesses will be able to list upcoming events or accept customer bookings directly.  
+- **📨 Messaging System** – Secure in-app messaging for direct communication between businesses and customers.  
+- **📊 Business Insights Dashboard** – Analytics for business owners to track views, engagement, and customer interactions.  
+- **🔐 Forgot Password Functionality** – Users will be able to securely reset their password via email if they forget their login credentials.  
+- **🗺️ Area-Specific Search Results** – Users will only see businesses located in or near the **specific area they searched for**, improving local relevance.
+
 ## 📱 Responsive Design  
 
 Mind Your Own Business is fully responsive, ensuring a smooth experience across **desktop, tablet, and mobile** devices.
@@ -151,6 +164,20 @@ Mind Your Own Business is designed to provide a **user-friendly experience** for
 - **🌍 Location-Based Listings** – Businesses and promotions are tailored to local customers.  
 - **🎨 Responsive & Modern Design** – Built with **Materialize** for a clean, professional look.  
 - **🔒 Secure Authentication** – Users must register to access full business profiles and engage with owners.  
+
+## 🧠 Design Decisions  
+
+### 🪟 Introductory Pop-Up Window
+
+To enhance user engagement and clearly communicate the platform's purpose, I implemented a **pop-up window that appears when users first visit the site**. This window serves as a brief introduction and welcome message, helping first-time visitors understand the site's core value and how to get started.  
+
+The goal is to ensure users don’t feel lost or confused upon arrival, especially since the platform offers unique features for both business owners and customers.  
+
+🔹 **Benefits of the Pop-Up Window**:
+- Improves first-time user understanding and retention  
+- Clearly highlights the platform's value proposition  
+- Encourages users to register or explore promotions right away  
+
 
 ## ✅ Testing  
 
