@@ -253,6 +253,12 @@ def login():
             if check_password_hash(check_user["password"], request.form.get("password")):
                 session["user"] = check_user["username"]
 
+                # Check whether the user has a session[next]
+                if "next" in session:
+                    url = session.pop("next")
+                    flash("We noticed you tryed searching this page before logging in", "success")
+                    return redirect(url)
+
                 flash("Welcome, {}".format(session["user"]), "success")
                 return redirect(url_for("main.profile", username=session["user"]))
             else:
@@ -768,6 +774,9 @@ def searched_category():
             flash(f"Welcome to {username}'s profile", "success")
             return redirect(url_for("main.profile", username=username))
         else:
+            # Save the url/route the user is trying to view 
+            session["next"] = url_for("main.profile", username=username)
+
             flash("Please log in to view profiles.", "warning")
             return redirect(url_for("main.login"))
 
