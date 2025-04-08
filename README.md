@@ -187,14 +187,22 @@ The goal is to ensure users don’t feel lost or confused upon arrival, especial
 | User logs out | Session is cleared, and user is redirected to the homepage | ✅ Pass |
 
 
-### HTML Test 
-![w3c-html-test]()
+### ✅ HTML Validation  
+![HTML validation](app/static/images/w3c-html-test.png)  
+> This project’s HTML has been validated using the official [W3C Markup Validation Service](https://validator.w3.org/), ensuring well-structured and standards-compliant markup.
 
-### CSS testing
-![w3c-css-testing]()
+---
 
-### Testing with JSLint
-![incorrent-answer]()
+### 🎨 CSS Validation  
+![CSS validation](app/static/images/w3c-css-testing.png)  
+> The CSS has been checked via the [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) for potential errors and compatibility issues.
+
+---
+
+### 🧠 JavaScript Validation with JSHint  
+![JSHint Validation](app/static/images/jshint-validation.png)  
+> This project uses [JSHint](https://jshint.com/) to identify potential problems in the JavaScript code, ensuring code quality, consistency, and adherence to modern best practices.
+
 
 ## Deployment
 1. **Design the Website on GitPod**:
