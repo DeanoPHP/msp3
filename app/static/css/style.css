@@ -7,25 +7,29 @@
     --color-navy: #2C3E50;
 }
 
+.responsive-img {
+    height: auto;
+}
+
 /* ----------------------------------index pop-up div */
 .padding-top {
     padding-top: 20px;
 }
 
 .pop-up {
-    display: none; 
+    display: none;
     position: fixed;
-    top: 50%; 
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%; 
-    height: 100%; 
+    width: 100%;
+    height: 100%;
     background-image: url("https://marketplace.canva.com/EAFF2rzzkDY/1/0/1131w/canva-clean-brown-paper-texture-background-page-border-wXfQfy5lra4.jpg");
     background-size: 100% 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
     text-align: center;
-    z-index: 1000; 
+    z-index: 1000;
 }
 
 .pop-up-p {
@@ -94,6 +98,7 @@ i.material-icons {
 .sidenav-container {
     width: 60%;
     margin: 20px auto;
+    text-align: center;
 }
 
 /* register */
@@ -150,7 +155,8 @@ button[type="submit"] {
     margin: 0 auto;
 }
 
-#about-container p, #about-container ul li {
+#about-container p,
+#about-container ul li {
     font-size: 20px;
     line-height: 1.6em;
 }
@@ -431,29 +437,32 @@ footer .container {
         width: 100%;
         margin: 0 auto !important;
     }
-    
-    .row-deal > .row {
+
+    .row-deal>.row {
         margin: 0 auto !important;
     }
-    
+
     .row-deal .col {
         margin: 0 auto !important;
     }
 
     .split-buttons {
         display: flex;
-        flex-direction: row; /* Keep edit & delete on the same row */
+        flex-direction: row;
+        /* Keep edit & delete on the same row */
         justify-content: space-between;
         width: 100%;
     }
 
-    .edit, .delete {
-        flex: 1; /* Makes them equal width */
+    .edit,
+    .delete {
+        flex: 1;
+        /* Makes them equal width */
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    
+
     .review-container {
         display: flex;
         flex-direction: column;
