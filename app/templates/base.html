@@ -39,22 +39,19 @@
                 </div>
             </nav>
 
-            <ul id="slide-out" class="sidenav">
-                <div class="sidenav-container">
-                    <li>
-                        <img src="{{ url_for('static', filename='images/logo.webp') }}" width="140px" height="140px"
-                            alt="logo">
-                    </li>
-                    <li><a href="{{ url_for('main.home') }}">Home</a></li>
-                    <li><a href="{{ url_for('main.about') }}">About</a></li>
-                    <li><a href="{{ url_for('main.deals') }}">Deals</a></li>
-                    {% if "user" not in session %}
-                    <li><a href="{{ url_for('main.login') }}">login</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('main.profile', username=session.get('user')) }}">Profile</a></li>
-                    <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
-                    {% endif %}
-                </div>
+            <ul id="slide-out" class="sidenav sidenav-container">
+                <li>
+                    <img src="{{ url_for('static', filename='images/logo.webp') }}" width="140" height="140" alt="logo">
+                </li>
+                <li><a href="{{ url_for('main.home') }}">Home</a></li>
+                <li><a href="{{ url_for('main.about') }}">About</a></li>
+                <li><a href="{{ url_for('main.deals') }}">Deals</a></li>
+                {% if "user" not in session %}
+                <li><a href="{{ url_for('main.login') }}">Login</a></li>
+                {% else %}
+                <li><a href="{{ url_for('main.profile', username=session.get('user')) }}">Profile</a></li>
+                <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+                {% endif %}
             </ul>
         </div>
 
