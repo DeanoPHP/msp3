@@ -84,18 +84,13 @@ Mind Your Own Business is fully responsive, ensuring a smooth experience across 
 #### 🖥️ Desktop  
 ![Desktop Home](app/static/images/wireframes/wireframe-home-desktop.jpeg)
 ![Desktop Profile](app/static/images/wireframes/wireframes-profile-desktop.jpeg)
-![Desktop Login](docs/screenshots/home-desktop.png)
-![Desktop Register](docs/screenshots/home-desktop.png)
+
 
 #### 📱 Mobile  
-*These are live screenshots of the implemented design on desktop and mobile devices.*
-![Mobile Sidenav](docs/screenshots/home-mobile.png)
-![Mobile Home](docs/screenshots/home-mobile.png)
-![Mobile Profile](docs/screenshots/home-mobile.png)
-![Mobile Login](docs/screenshots/home-mobile.png)
-![Mobile Register](docs/screenshots/home-mobile.png)
+![Mobile Sidenav](app/static/images/wireframes/mobile_wireframes.jpeg)
 
 ### Actual Website
+*These are live screenshots of the implemented design on desktop and mobile devices.*
 #### 🖥️ Desktop  
 ![Desktop Home](app/static/images/site-images/home-desktop.png)
 ![Desktop Profile](app/static/images/site-images/profile-desktop.png)
