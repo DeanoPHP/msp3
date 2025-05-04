@@ -7,8 +7,8 @@
     <div class="category-deals-card-container">
         <div class="row">
             <div class="category-deals-image col s2">
-                <img src="https://i.etsystatic.com/14512607/r/il/033e20/5089214224/il_570xN.5089214224_kmpq.jpg"
-                    width="100%" height="100px">
+                <img class="responsive-img" src="data:image/jpeg;base64,{{ cat['images'][0] }}" width="100"
+                    height="100" alt="Deal Image">
             </div>
             <div class="category-deals-description col s10">
                 <span class="card-title">{{ cat["company_name"] }}</span>
