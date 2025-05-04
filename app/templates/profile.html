@@ -177,28 +177,39 @@
 
                 <div class="business-right">
                     {% if business %}
-                    <div class="business-logo"></div>
-                    <p><b>Category:</b> {{ business['category'] }}</p>
-                    <p><b>Location:</b> {{ business['location'] }}</p>
-                    <p><b>Email:</b> {{ business['contact_info']['email'] }}</p>
-                    <p><b>Phone:</b> {{ business['contact_info']['phone'] }}</p>
-                    <p><b>Website:</b> <a href="https://{{ business['contact_info']['website'] }}" target="_blank">{{
-                            business['contact_info']['website'] }}</a></p>
-                    {% if session["user"] == user["username"] %}
-                    {% if not deal %}
-                    <p><a class="modal-trigger" href="#create-deal">Create a deal</a></p>
-                    {% endif %}
-                    <p><a class="modal-trigger" href="#editBusinessModal">Edit Business Details</a></p>
-                    <p><a class="btn red modal-trigger" href="#deleteBusinessModal">Delete Business</a></p>
-                    {% endif %}
+                        <div class="business-logo"></div>
+                        <p><b>Category:</b> {{ business['category'] }}</p>
+                        <p><b>Location:</b> {{ business['location'] }}</p>
+                
+                        {% if business['contact_info'] %}
+                            <p><b>Email:</b> {{ business['contact_info']['email'] }}</p>
+                            <p><b>Phone:</b> {{ business['contact_info']['phone'] }}</p>
+                            <p><b>Website:</b> 
+                                <a href="https://{{ business['contact_info']['website'] }}" target="_blank">
+                                    {{ business['contact_info']['website'] }}
+                                </a>
+                            </p>
+                        {% else %}
+                            <p><i>No contact info provided.</i></p>
+                        {% endif %}
+                
+                        {% if session["user"] == user["username"] %}
+                            {% if not deal %}
+                            <p><a class="modal-trigger" href="#create-deal">Create a deal</a></p>
+                            {% endif %}
+                            <p><a class="modal-trigger" href="#editBusinessModal">Edit Business Details</a></p>
+                            <p><a class="btn red modal-trigger" href="#deleteBusinessModal">Delete Business</a></p>
+                        {% endif %}
                     {% else %}
-                    <h5>No business info</h5>
+                        <h5>No business info</h5>
                     {% endif %}
+                
                     {% if get_all_businesses %}
-                    <!-- Google Maps Container -->
-                    <div id="map"></div>
+                        <!-- Google Maps Container -->
+                        <div id="map"></div>
                     {% endif %}
                 </div>
+                
             </div>
         </div>
 
@@ -348,6 +359,7 @@
             </div>
         </div>
 
+        {% if business and business['contact_info'] %}
         <!-- Modal for editing business details -->
         <div id="editBusinessModal" class="modal">
             <div class="modal-content">
@@ -455,6 +467,7 @@
                 </form>
             </div>
         </div>
+        {% endif %}
 
         <!-- Modal for editing reviews -->
         <div id="edit-review" class="modal">
