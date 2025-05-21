@@ -161,6 +161,71 @@ The goal is to ensure users don’t feel lost or confused upon arrival, especial
 - Encourages users to register or explore promotions right away  
 
 
+## 🧩 Data Schema
+
+This application uses **MongoDB** to store information about businesses, users, deals, and reviews. Below are the details of each collection and their fields:
+
+---
+
+### 🏢 `businesses` Collection
+
+| Field         | Type       | Description                                 |
+|---------------|------------|---------------------------------------------|
+| `_id`         | ObjectId   | Unique ID for the business                  |
+| `owner_id`    | ObjectId   | Reference to the user who owns the business |
+| `company_name`| String     | Name of the business                        |
+| `description` | String     | Description of the business                 |
+| `location`    | String     | Address or general location of the business |
+| `category`    | String     | Category or type (e.g., café, plumber)      |
+| `images`      | Array      | List of image URLs or file references       |
+| `contact_info`| Object     | Dictionary containing contact details       |
+
+---
+
+### 💬 `deals` Collection
+
+| Field           | Type       | Description                                           |
+|------------------|------------|-------------------------------------------------------|
+| `_id`            | ObjectId   | Unique ID for the deal                               |
+| `business_owner` | ObjectId   | Reference to the business that created the deal      |
+| `deals_text`     | String     | Description or title of the deal                     |
+| `date`           | Date       | Date the deal was posted                             |
+| `expire_date`    | Date       | Expiration date of the deal                          |
+| `deals_image`    | String     | URL or path to the deal image                        |
+
+---
+
+### ⭐ `reviews` Collection
+
+| Field          | Type       | Description                                        |
+|----------------|------------|----------------------------------------------------|
+| `_id`          | ObjectId   | Unique ID for the review                          |
+| `business_id`  | ObjectId   | Reference to the business being reviewed          |
+| `user_id`      | ObjectId   | Reference to the user who wrote the review        |
+| `profile_image`| String     | URL to the user’s profile image (optional)        |
+| `text`         | String     | Review content                                    |
+| `date`         | Date       | Date the review was posted                        |
+
+---
+
+### 👤 `users` Collection
+
+| Field      | Type       | Description                        |
+|------------|------------|------------------------------------|
+| `_id`      | ObjectId   | Unique ID for the user             |
+| `username` | String     | User’s display or login name       |
+| `password` | String     | Hashed user password               |
+
+---
+
+### 🔗 Relationships
+
+- One `user` can own a `business`
+- Each `business` can create a `deal` and receive multiple `reviews`
+- One `user` can write multiple `reviews`
+
+
+
 ## ✅ Testing  
 
 ### 🛠️ Functional Testing  

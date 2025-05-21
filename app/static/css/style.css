@@ -169,6 +169,9 @@ button[type="submit"] {
 .left-content,
 .right-content {
     padding: 10px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    overflow: hidden;
 }
 
 /* profile left area */
