@@ -20,6 +20,8 @@ That's why I created **Mind Your Own Business**—a platform for **small busines
 - ✅ **Browse Local Businesses** – Users can explore promotions and discover trusted businesses in their area.  
 - ✅ **Exclusive Access for Registered Users** – While promotions are visible to everyone, only registered members can view business profiles and connect with owners.
 
+<hr>
+
 ## 💡 Why Choose Mind Your Own Business?  
 
 Whether you're a **mobile hairdresser offering discounts, a cleaner looking for more clients, or a builder running a limited-time deal**, **Mind Your Own Business** helps you connect with the right customers and grow your business effortlessly.
@@ -35,6 +37,8 @@ Whether you're a **mobile hairdresser offering discounts, a cleaner looking for 
 - **💬 Customer Engagement** – Encourage reviews and feedback to build trust with potential clients.  
 - **📱 Mobile-Friendly** – Seamlessly browse and manage your business from any device.  
 - **🔍 Search & Filter Options** – Easily find businesses and promotions based on category and location.  
+
+<hr>
 
 ## 👤 UX / User Stories  
 
@@ -60,7 +64,9 @@ To ensure a seamless experience, **Mind Your Own Business** is designed with the
 - I want to **manage user accounts** to ensure a secure and spam-free experience.  
 - I want to **moderate business listings and promotions** to prevent misuse.  
 - I want to **remove inactive or fraudulent accounts** to maintain platform integrity.  
-- I want to **analyze platform usage data** to improve user experience and features.  
+- I want to **analyze platform usage data** to improve user experience and features. 
+
+<hr> 
 
 ## 🔮 Future Features  
 
@@ -74,6 +80,8 @@ To ensure a seamless experience, **Mind Your Own Business** is designed with the
 - **📊 Business Insights Dashboard** – Analytics for business owners to track views, engagement, and customer interactions.  
 - **🔐 Forgot Password Functionality** – Users will be able to securely reset their password via email if they forget their login credentials.  
 - **🗺️ Area-Specific Search Results** – Users will only see businesses located in or near the **specific area they searched for**, improving local relevance.
+
+<hr>
 
 ## 📱 Responsive Design  
 
@@ -104,6 +112,8 @@ Mind Your Own Business is fully responsive, ensuring a smooth experience across 
 ![Mobile Login](app/static/images/site-images/login-mobile.png)
 ![Mobile Register](app/static/images/site-images/register-mobile.png)
 
+<hr>
+
 ## 🛠️ Technologies and Tools Used  
 
 ### **Frontend**  
@@ -128,6 +138,8 @@ Mind Your Own Business is fully responsive, ensuring a smooth experience across 
 - **Heroku** – The platform used to deploy and host the application.  
 - **Gunicorn** – A WSGI server for running the Flask application in production.  
 
+<hr>
+
 ## 🎨 Design Overview  
 
 Mind Your Own Business is designed to provide a **user-friendly experience** for both business owners and customers. The platform features a **clean, intuitive interface** that makes it easy to browse businesses, post promotions, and connect with local services.
@@ -147,6 +159,8 @@ Mind Your Own Business is designed to provide a **user-friendly experience** for
 - **🎨 Responsive & Modern Design** – Built with **Materialize** for a clean, professional look.  
 - **🔒 Secure Authentication** – Users must register to access full business profiles and engage with owners.  
 
+<hr>
+
 ## 🧠 Design Decisions  
 
 ### 🪟 Introductory Pop-Up Window
@@ -160,6 +174,7 @@ The goal is to ensure users don’t feel lost or confused upon arrival, especial
 - Clearly highlights the platform's value proposition  
 - Encourages users to register or explore promotions right away  
 
+<hr>
 
 ## 🧩 Data Schema
 
@@ -224,7 +239,74 @@ This application uses **MongoDB** to store information about businesses, users, 
 - Each `business` can create a `deal` and receive multiple `reviews`
 - One `user` can write multiple `reviews`
 
+<hr>
 
+## 🔧 Enhancements & Advanced Features (For Distinction)
+
+As part of tutor and mentor feedback, I implemented the following improvements and advanced logic in my project to elevate its usability, security, and professionalism.
+
+### 🧠 Complex Logic and Features
+
+#### 1. 🔒 Custom Login Required Decorator
+
+To ensure that only authenticated users can access certain routes, I created a custom decorator named `logged_in_user`. This helps centralize the access control logic and keeps routes clean and readable.
+
+While learning Node.js, I came across the concept of decorators and realized they could be useful for protecting routes in Flask. I cannot take full credit for the function itself, as I researched how to implement a login-required decorator in Flask. However, I understood the purpose and use case, and applied it successfully to my project to centralize access control logic and keep my routes clean and readable.
+
+
+```
+def logged_in_user():
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if "user" not in session:
+                flash("You need to be logged in to access this page.", "danger")
+                return redirect(url_for("main.login"))
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
+```
+
+### 💡 Redirecting Users Back After Login
+
+When a non-logged-in user tries to access a protected route, the application saves the original URL they attempted to visit in the session. After a successful login, they are redirected back to that original URL.
+
+This improvement was made based on advice from my mentor, **Dick Vlaanderen**, during a review session.
+
+**Saving the original URL (in a protected route):**
+
+# Save the URL the user tried to visit
+```
+session["next"] = url_for("main.profile", username=username)
+flash("Please log in to view profiles.", "warning")
+return redirect(url_for("main.login"))
+```
+
+# After login, redirect back if there is a saved 'next' URL
+```
+if "next" in session:
+    url = session.pop("next")
+    flash("We noticed you tried accessing this page before logging in.", "success")
+    return redirect(url)
+```
+
+### 🪟 Pop-Up Introduction & Navigation Options
+
+Based on feedback from **Miguel Ortega Legorreta**, a staff member at **Bristol College**, I updated the landing page to improve clarity and usability for first-time visitors.
+
+When a user first arrives at the site, they are presented with a **pop-up modal** that:
+
+- Clearly explains what the website is about and how it works.
+- Offers the user three options:
+  - **Continue as Guest**
+  - **Register**
+  - **Log In**
+
+This change helps users quickly understand the purpose of the site and choose how they want to interact with it. It also reduces confusion and enhances the onboarding experience for both new and returning visitors.
+
+![Responsive](app/static/images/popup.png)
+
+<hr>
 
 ## ✅ Testing  
 
@@ -263,6 +345,7 @@ This application uses **MongoDB** to store information about businesses, users, 
 ![JSHint Validation](app/static/images/jshint-validation.png)  
 > This project uses [JSHint](https://jshint.com/) to identify potential problems in the JavaScript code, ensuring code quality, consistency, and adherence to modern best practices.
 
+<hr>
 
 ## Deployment
 1. **Design the Website on GitPod**:
@@ -389,6 +472,8 @@ This project includes code that was developed with the assistance of AI and exte
 - **Image Implementation** – AI also helped guide the integration of image processing into my code when traditional methods didn’t work.  
 
 All other code was written by me, unless otherwise stated.  
+
+<hr>
  
 ## 🙌 Credits and Acknowledgments  
 
