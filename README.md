@@ -290,9 +290,9 @@ if "next" in session:
     return redirect(url)
 ```
 
-### 🪟 Pop-Up Introduction & Navigation Options
+# 🪟 Pop-Up Introduction & Navigation Options
 
-Based on feedback from **Miguel Ortega Legorreta**, a staff member at **Bristol College**, I updated the landing page to improve clarity and usability for first-time visitors.
+Based on feedback from **Miguel Ortega Legorreta**, a lecturure at **Bristol College**, I updated the landing page to improve clarity and usability for first-time visitors.
 
 When a user first arrives at the site, they are presented with a **pop-up modal** that:
 
